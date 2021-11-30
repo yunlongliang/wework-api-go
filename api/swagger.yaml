@@ -1,0 +1,7830 @@
+---
+swagger: "2.0"
+info:
+  description: "企业微信服务端API."
+  version: "1.0.0"
+  title: "企业微信服务端API"
+  license:
+    name: "Apache-2.0"
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+host: "qyapi.weixin.qq.com"
+basePath: "/cgi-bin"
+schemes:
+- "https"
+paths:
+  /gettoken:
+    get:
+      tags:
+      - "auth"
+      summary: "每个应用有独立的secret，获取到的access_token只能本应用使用，所以每个应用的access_token应该分开来获取"
+      description: ""
+      operationId: "getAuthToken"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "corpid"
+        in: "query"
+        description: "企业ID"
+        required: true
+        type: "string"
+        x-exportParamName: "Corpid"
+      - name: "corpsecret"
+        in: "query"
+        description: "应用的凭证密钥"
+        required: true
+        type: "string"
+        x-exportParamName: "Corpsecret"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/TokenRsp"
+  /get_api_domain_ip:
+    get:
+      tags:
+      - "auth"
+      summary: "获取企业微信API域名IP段"
+      description: ""
+      operationId: "getApiDomainIp"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetApiDomainIpRsp"
+  /user/create:
+    post:
+      tags:
+      - "user"
+      summary: "创建成员"
+      description: "创建成员"
+      operationId: "createUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateUserReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /user/get:
+    get:
+      tags:
+      - "user"
+      summary: "读取成员"
+      description: "读取成员"
+      operationId: "getUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "userid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Userid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetUserRsp"
+  /user/update:
+    post:
+      tags:
+      - "user"
+      summary: "更新成员"
+      description: "更新成员"
+      operationId: "updateUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateUserReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /user/delete:
+    get:
+      tags:
+      - "user"
+      summary: "删除成员"
+      description: "删除成员"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "userid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Userid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /user/batchdelete:
+    post:
+      tags:
+      - "user"
+      summary: "批量删除成员"
+      description: "批量删除成员"
+      operationId: "deleteBatchUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/BatchDeleteUserReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /user/simplelist:
+    get:
+      tags:
+      - "user"
+      summary: "获取部门成员"
+      description: "获取部门成员"
+      operationId: "getUserSimplelist"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "department_id"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int32"
+        x-exportParamName: "DepartmentId"
+      - name: "fetch_child"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+        x-exportParamName: "FetchChild"
+        x-optionalDataType: "Int32"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SimplelistRsp"
+  /user/list:
+    get:
+      tags:
+      - "user"
+      summary: "获取部门成员详情"
+      description: "获取部门成员详情"
+      operationId: "getUserList"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        description: "调用接口凭证"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "department_id"
+        in: "query"
+        description: "获取的部门id"
+        required: true
+        type: "integer"
+        format: "int32"
+        x-exportParamName: "DepartmentId"
+      - name: "fetch_child"
+        in: "query"
+        description: "1/0：是否递归获取子部门下面的成员"
+        required: false
+        type: "integer"
+        format: "int32"
+        x-exportParamName: "FetchChild"
+        x-optionalDataType: "Int32"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ListUserRsp"
+  /user/convert_to_openid:
+    post:
+      tags:
+      - "user"
+      summary: "userid与openid互换"
+      description: "userid转openid"
+      operationId: "convertUseridToOpenid"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/ConvertToOpenidReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ConvertToOpenidRsp"
+  /user/authsucc:
+    get:
+      tags:
+      - "user"
+      summary: "二次验证"
+      operationId: "authsuccUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "userid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Userid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /batch/invite:
+    post:
+      tags:
+      - "user"
+      summary: "邀请成员"
+      operationId: "inviteUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/InviteReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/InviteRsp"
+  /corp/get_join_qrcode:
+    get:
+      tags:
+      - "corp"
+      summary: "获取加入企业二维码"
+      operationId: "getJoinQrcode"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "size_type"
+        in: "query"
+        required: false
+        type: "string"
+        x-exportParamName: "SizeType"
+        x-optionalDataType: "String"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetJoinQrcodeRsp"
+  /user/get_active_stat:
+    post:
+      tags:
+      - "user"
+      summary: "获取企业活跃成员数"
+      operationId: "getActiveStat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "date"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Date"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetActiveStatRsp"
+  /message/send:
+    post:
+      tags:
+      - "message"
+      summary: "发送消息"
+      description: "应用支持推送文本、图片、视频、文件、图文等类型"
+      operationId: "sendMessage"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/SendMessageReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SendMessageRsp"
+  /message/update_taskcard:
+    post:
+      tags:
+      - "message"
+      summary: "更新任务卡片消息状态"
+      description: "应用可以发送任务卡片消息，发送之后可再通过接口更新用户任务卡片消息的替换文案信息。"
+      operationId: "updateMessageTaskcard"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UpdateTaskcardReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/UpdateTaskcardRsp"
+  /tag/create:
+    post:
+      tags:
+      - "tag"
+      summary: "创建内部标签"
+      description: "创建企业内部标签"
+      operationId: "createTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateTagReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CreateTagRsp"
+  /tag/update:
+    post:
+      tags:
+      - "tag"
+      summary: "更新内部标签名字"
+      description: "更新内部标签名字"
+      operationId: "updateTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateTagReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /tag/delete:
+    get:
+      tags:
+      - "tag"
+      summary: "删除标签"
+      description: "删除企业内部标签"
+      operationId: "deleteTag"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "tagid"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int32"
+        x-exportParamName: "Tagid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /tag/addtagusers:
+    post:
+      tags:
+      - "tag"
+      summary: "增加标签成员"
+      description: "增加标签成员"
+      operationId: "addTagUsers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AddTagUsersReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /tag/deltagusers:
+    post:
+      tags:
+      - "tag"
+      summary: "删除标签成员"
+      description: "删除标签成员"
+      operationId: "deleteTagUsers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/DeleteTagUsersReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /tag/get:
+    get:
+      tags:
+      - "tag"
+      summary: "获取标签成员"
+      description: "获取标签成员"
+      operationId: "getTagUsers"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "tagid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Tagid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetTagUsersRsp"
+  /tag/list:
+    get:
+      tags:
+      - "tag"
+      summary: "获取标签列表"
+      description: "获取标签列表"
+      operationId: "getTagList"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetTagListRsp"
+  /externalcontact/get_follow_user_list:
+    get:
+      tags:
+      - "externalcontact"
+      summary: "获取配置了客户联系功能的成员列表"
+      description: "企业和第三方服务商可通过此接口获取配置了客户联系功能的成员列表。"
+      operationId: "getFollowUserList"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetFollowUserListRsp"
+  /externalcontact/add_contact_way:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "配置客户联系「联系我」方式"
+      description: "企业可以在管理后台-客户联系-加客户中配置成员的「联系我」的二维码或者小程序按钮，客户通过扫描二维码或点击小程序上的按钮，即\
+        可获取成员联系方式,主动联系到成员。企业可通过此接口为具有客户联系功能的成员生成专属的「联系我」二维码或者「联系我」按钮。"
+      operationId: "addContactWay"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/AddContactWayReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AddContactWayRsp"
+  /externalcontact/get_contact_way:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取企业已配置的「联系我」方式"
+      description: "获取企业配置的「联系我」二维码和「联系我」小程序按钮。"
+      operationId: "getContactWay"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/GetContactWayReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetContactWayRsp"
+  /externalcontact/update_contact_way:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "更新企业已配置的「联系我」方式"
+      description: "更新企业配置的「联系我」二维码和「联系我」小程序按钮中的信息，如使用人员和备注等。"
+      operationId: "updateContactWay"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateContactWayReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /externalcontact/del_contact_way:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "删除企业已配置的「联系我」方式"
+      description: "删除一个已配置的「联系我」二维码或者「联系我」小程序按钮。"
+      operationId: "delContactWay"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/DelContactWayReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /externalcontact/close_temp_chat:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "结束临时会话"
+      description: "将指定的企业成员和客户之前的临时会话断开，断开前会自动下发已配置的结束语。"
+      operationId: "closeTempChat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/CloseTempChatReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /externalcontact/list:
+    get:
+      tags:
+      - "externalcontact"
+      summary: "获取客户列表"
+      description: "企业可通过此接口获取指定成员添加的客户列表。客户是指配置了客户联系功能的成员所添加的外部联系人。没有配置客户联系功能的成员，\
+        所添加的外部联系人将不会作为客户返回。"
+      operationId: "getCustomerList"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "userid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Userid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetExternalContactListRsp"
+  /externalcontact/get:
+    get:
+      tags:
+      - "externalcontact"
+      summary: "获取客户详情"
+      description: "企业可通过此接口，根据外部联系人的userid（如何获取?），拉取客户详情。"
+      operationId: "getCustomerDetail"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "external_userid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "ExternalUserid"
+      - name: "cursor"
+        in: "query"
+        required: false
+        type: "string"
+        x-exportParamName: "Cursor"
+        x-optionalDataType: "String"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetExternalContactDetailRsp"
+  /externalcontact/batch/get_by_user:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "批量获取客户详情"
+      description: "企业/第三方可通过此接口获取指定成员添加的客户信息列表。"
+      operationId: "getBatchCustomerUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetExternalContactBatchUserReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetExternalContactBatchUserRsp"
+  /externalcontact/remark:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "修改客户备注信息"
+      description: "企业可通过此接口修改指定用户添加的客户的备注信息。"
+      operationId: "remarkCustomer"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateExternalContactRemarkReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /externalcontact/get_corp_tag_list:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取企业标签库"
+      description: "企业可通过此接口获取企业客户标签详情。"
+      operationId: "getTagCustomerList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetCorpTagListReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetCorpTagListRsp"
+  /externalcontact/add_corp_tag:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "添加企业客户标签"
+      description: "企业可通过此接口向客户标签库中添加新的标签组和标签，每个企业最多可配置3000个企业标签。"
+      operationId: "addCustomerTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/AddCorpTagReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AddCorpTagRsp"
+  /externalcontact/edit_corp_tag:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "编辑企业客户标签"
+      description: "企业可通过此接口编辑客户标签/标签组的名称或次序值。"
+      operationId: "editCustomerTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/EditCorpTagReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /externalcontact/del_corp_tag:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "删除企业客户标签"
+      description: "企业可通过此接口删除客户标签库中的标签，或删除整个标签组。"
+      operationId: "delCustomerTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/DelCorpTagReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /externalcontact/mark_tag:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "编辑客户企业标签"
+      description: "企业可通过此接口为指定成员的客户添加上由企业统一配置的标签。"
+      operationId: "markCustomerTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/MarkCorpContactTagReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /externalcontact/transfer_customer:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "分配在职成员的客户"
+      description: "企业可通过此接口，转接在职成员的客户给其他成员。"
+      operationId: "transferCustomer"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/TransferCustomerReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/TransferCustomerRsp"
+  /externalcontact/transfer_result:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "查询客户接替状态"
+      description: "企业和第三方可通过此接口查询在职成员的客户转接情况。"
+      operationId: "transferCustomerResult"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetTransferResultReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetTransferResultRsp"
+  /externalcontact/get_unassigned_list:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取待分配的离职成员列表"
+      description: "企业和第三方可通过此接口，获取所有离职成员的客户列表，并可进一步调用分配离职成员的客户接口将这些客户重新分配给其他企业成员。"
+      operationId: "getUnassignedList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetUnassignedListReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetUnassignedListRsp"
+  /externalcontact/resigned/transfer_customer:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "分配离职成员的客户"
+      description: "企业可通过此接口，分配离职成员的客户给其他成员。"
+      operationId: "transferResignedCustomer"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/ResignedTransferCustomerReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ResignedTransferCustomerRsp"
+  /externalcontact/resigned/transfer_result:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "查询客户接替状态"
+      description: "企业和第三方可通过此接口查询离职成员的客户分配情况。"
+      operationId: "getTransferCustomerResult"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/ResignedTransferResultReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ResignedTransferResultRsp"
+  /externalcontact/groupchat/transfer:
+    post:
+      tags:
+      - "groupchat"
+      summary: "分配离职成员的客户群"
+      description: "企业可通过此接口，将已离职成员为群主的群，分配给另一个客服成员。"
+      operationId: "transferGroupchat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GroupchatTransferReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GroupchatTransferRsp"
+  /externalcontact/groupchat/list:
+    post:
+      tags:
+      - "groupchat"
+      summary: "获取客户群列表"
+      description: "该接口用于获取配置过客户群管理的客户群列表。"
+      operationId: "GetgroupchatList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GroupchatListReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GroupchatListRsp"
+  /externalcontact/groupchat/get:
+    post:
+      tags:
+      - "groupchat"
+      summary: "获取客户群详情"
+      description: "通过客户群ID，获取详情。包括群名、群成员列表、群成员入群时间、入群方式。（客户群是由具有客户群使用权限的成员创建的外部群）"
+      operationId: "getGroupchat"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetGroupchatReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetGroupchatRsp"
+  /externalcontact/opengid_to_chatid:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "客户群opengid转换"
+      description: "用户在微信里的客户群里打开小程序时，某些场景下可以获取到群的opengid，如果该群是企业微信的客户群，则企业或第三方可以调\
+        用此接口将一个opengid转换为客户群chat_id"
+      operationId: "convertOpengidToChatid"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/ConvertOpengidToChatidReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ConvertOpengidToChatidRsp"
+  /externalcontact/get_moment_list:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取企业全部的发表列表"
+      description: "企业和第三方应用可通过该接口获取企业全部的发表内容。"
+      operationId: "getMomentList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetMomentListReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetMomentListRsp"
+  /externalcontact/get_moment_task:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取客户朋友圈企业发表的列表"
+      description: "企业和第三方应用可通过该接口获取企业发表的朋友圈成员执行情况.第三方应用调用需要企业授权客户朋友圈下获取企业全部的发表记录的\
+        权限"
+      operationId: "getMomentTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetMomentTaskReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetMomentTaskRsp"
+  /externalcontact/get_moment_customer_list:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取客户朋友圈发表时选择的可见范围"
+      description: "企业和第三方应用可通过该接口获取客户朋友圈创建时，选择的客户可见范围"
+      operationId: "getMomentCustomerList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetMomentCustomerListReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetMomentCustomerListRsp"
+  /externalcontact/get_moment_send_result:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取客户朋友圈发表后的可见客户列表"
+      description: "企业和第三方应用可通过该接口获取客户朋友圈发表后，可在微信朋友圈中查看的客户列表"
+      operationId: "getMomentSendResult"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetMomentSendResultReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetMomentSendResultRsp"
+  /externalcontact/get_moment_comments:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取客户朋友圈的互动数据"
+      description: "企业和第三方应用可通过此接口获取客户朋友圈的互动数据。"
+      operationId: "getMomentComments"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetMomentCommentsReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetMomentCommentsRsp"
+  /externalcontact/add_msg_template:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "创建企业群发"
+      description: "企业跟第三方应用可通过此接口添加企业群发消息的任务并通知成员发送给相关客户或客户群。（注：企业微信终端需升级到2.7.5版本\
+        及以上）注意：调用该接口并不会直接发送消息给客户/客户群，需要成员确认后才会执行发送（客服人员的企业微信需要升级到2.7.5及以上版本）旧接口创建企\
+        业群发已经废弃，接口升级后支持发送视频文件，并且支持最多同时发送9个附件。同一个企业每个自然月内仅可针对一个客户/客户群发送4条消息，超过接收上限的\
+        客户将无法再收到群发消息。"
+      operationId: "addMsgTemplate"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/AddMsgTemplateReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AddMsgTemplateRsp"
+  /externalcontact/get_groupmsg_list_v2:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取群发记录列表"
+      description: "企业和第三方应用可通过此接口获取企业与成员的群发记录。群发任务记录的起止时间间隔不能超过1个月"
+      operationId: "getGroupmsgListV2"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetGroupmsgListV2Req"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetGroupmsgListV2Rsp"
+  /externalcontact/get_groupmsg_task:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取群发成员发送任务列表"
+      description: "获取群发成员发送任务列表"
+      operationId: "getGroupmsgTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetGroupmsgTaskReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetGroupmsgTaskRsp"
+  /externalcontact/get_groupmsg_send_result:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取企业群发成员执行结果"
+      description: "获取企业群发成员执行结果"
+      operationId: "getGroupmsgSendResult"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetGroupmsgSendResultReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful responses"
+          schema:
+            $ref: "#/definitions/GetGroupmsgSendResultRsp"
+  /externalcontact/send_welcome_msg:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "发送新客户欢迎语"
+      description: "企业微信在向企业推送添加外部联系人事件时，会额外返回一个welcome_code，企业以此为凭据调用接口，即可通过成员向新添\
+        加的客户发送个性化的欢迎语。为了保证用户体验以及避免滥用，企业仅可在收到相关事件后20秒内调用，且只可调用一次。如果企业已经在管理端为相关成员配置了\
+        可用的欢迎语，则推送添加外部联系人事件时不会返回welcome_code。每次添加新客户时可能有多个企业自建应用/第三方应用收到带有welcome_code的\
+        回调事件，但仅有最先调用的可以发送成功。后续调用将返回41051（externaluser has started chatting）错误，请用户根\
+        据实际使用需求，合理设置应用可见范围，避免冲突。旧接口发送新客户欢迎语已经废弃，接口升级后支持发送视频文件，并且最多支持同时发送9个附件"
+      operationId: "sendWelcomeMsg"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/SendWelcomeMsgReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SendWelcomeMsgRsp"
+  /externalcontact/group_welcome_template/add:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "添加入群欢迎语素材"
+      description: "企业可通过此API向企业的入群欢迎语素材库中添加素材。每个企业的入群欢迎语素材库中，最多容纳100个素材。text中支持配置\
+        多个%NICKNAME%(大小写敏感)形式的欢迎语，当配置了欢迎语占位符后，发送给客户时会自动替换为客户的昵称;text、image、link和miniprogram四\
+        者不能同时为空；text与另外三者可以同时发送，此时将会以两条消息的形式触达客户;image、link和miniprogram只能有一个，如果三者同\
+        时填，则按image、link、miniprogram的优先顺序取参，也就是说，如果image与link同时传值，则只有image生效。media_id和\
+        pic_url只需填写一个，两者同时填写时使用media_id，二者不可同时为空。"
+      operationId: "addGroupWelcomeTemplate"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/AddGroupWelcomeTemplateReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AddGroupWelcomeTemplateRsp"
+  /externalcontact/get_user_behavior_data:
+    post:
+      tags:
+      - "externalcontact"
+      summary: "获取「联系客户统计」数据"
+      description: "企业可通过此接口获取成员联系客户的数据，包括发起申请数、新增客户数、聊天数、发送消息数和删除/拉黑成员的客户数等指标。"
+      operationId: "getUserBehaviorData"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetUserBehaviorDataReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetUserBehaviorDataRsp"
+  /externalcontact/groupchat/statistic:
+    post:
+      tags:
+      - "groupchat"
+      summary: "获取「群聊数据统计」数据 - 按群主聚合的方式"
+      description: "获取指定日期的统计数据。注意，企业微信仅存储180天的数据。"
+      operationId: "getGroupchatStatistic"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetGroupchatStatisticReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetGroupchatStatisticRsp"
+  /externalcontact/groupchat/statistic_group_by_day:
+    post:
+      tags:
+      - "groupchat"
+      summary: "获取「群聊数据统计」数据 - 按自然日聚合的方式"
+      description: "获取「群聊数据统计」数据 - 按自然日聚合的方式"
+      operationId: "getGroupchatStatisticGroupByDay"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetGroupchatStatisticGroupByDayReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetGroupchatStatisticGroupByDayRsp"
+  /media/upload:
+    post:
+      tags:
+      - "media"
+      summary: "上传临时素材"
+      description: "素材上传得到media_id，该media_id仅三天内有效;media_id在同一企业内应用之间可以共享"
+      operationId: "uploadMedia"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "type"
+        in: "query"
+        description: "媒体文件类型，分别有图片（image）、语音（voice）、视频（video），普通文件（file）"
+        required: true
+        type: "string"
+        x-exportParamName: "Type_"
+      - name: "filename"
+        in: "formData"
+        required: false
+        type: "file"
+        x-exportParamName: "Filename"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/MediaUploadRsp"
+  /media/uploadimg:
+    post:
+      tags:
+      - "media"
+      summary: "上传图片"
+      description: "上传图片得到图片URL，该URL永久有效;返回的图片URL，仅能用于图文消息正文中的图片展示，或者给客户发送欢迎语等；若用于\
+        非企业微信环境下的页面，图片将被屏蔽。每个企业每天最多可上传100张图片"
+      operationId: "uploadImgMedia"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "filename"
+        in: "formData"
+        required: true
+        type: "file"
+        x-exportParamName: "Filename"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/MediaUploadImgRsp"
+  /media/get:
+    get:
+      tags:
+      - "media"
+      summary: "获取临时素材"
+      description: "获取临时素材"
+      operationId: "getMedia"
+      produces:
+      - "application/octet-stream"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "media_id"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "MediaId"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "file"
+  /media/get/jssdk:
+    get:
+      tags:
+      - "media"
+      summary: "获取高清语音素材"
+      description: "可以使用本接口获取从JSSDK的uploadVoice接口上传的临时语音素材，格式为speex，16K采样率。该音频比上文的\
+        临时素材获取接口（格式为amr，8K采样率）更加清晰，适合用作语音识别等对音质要求较高的业务。"
+      operationId: "getMediaJssdk"
+      produces:
+      - "application/octet-stream"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "media_id"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "MediaId"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "file"
+  /appchat/create:
+    post:
+      tags:
+      - "appchat"
+      summary: "创建群聊会话"
+      description: "创建群聊会话"
+      operationId: "createAppchat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/CreateAppchatReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CreateAppchatRsp"
+  /appchat/update:
+    post:
+      tags:
+      - "appchat"
+      summary: "修改群聊会话"
+      description: "修改群聊会话"
+      operationId: "updateAppchat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UpdateAppchatReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /appchat/get:
+    get:
+      tags:
+      - "appchat"
+      summary: "获取群聊会话"
+      description: "获取群聊会话"
+      operationId: "getAppchat"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "chatid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Chatid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetAppchatReq"
+  /department/create:
+    post:
+      tags:
+      - "department"
+      summary: "创建部门"
+      description: "创建部门"
+      operationId: "createDepartment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/CreateDepartmentReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CreateDepartmentRsp"
+  /department/update:
+    post:
+      tags:
+      - "department"
+      summary: "更新部门"
+      description: "更新部门"
+      operationId: "updateDepartment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UpdateDepartmentReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /department/delete:
+    get:
+      tags:
+      - "department"
+      summary: "删除部门"
+      description: "删除部门"
+      operationId: "deleteDepartment"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "id"
+        in: "query"
+        required: true
+        type: "integer"
+        x-exportParamName: "Id"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /department/list:
+    get:
+      tags:
+      - "department"
+      summary: "获取部门列表"
+      description: "获取部门列表"
+      operationId: "getDepartmentList"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "id"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+        x-exportParamName: "Id"
+        x-optionalDataType: "Int32"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetDepartmentListRsp"
+  /linkedcorp/agent/get_perm_list:
+    post:
+      tags:
+      - "linkedcorp"
+      summary: "获取应用的可见范围"
+      description: "本接口只返回互联企业中非本企业内的成员和部门的信息，如果要获取本企业的可见范围，请调用“获取应用”接口"
+      operationId: "getLinkedcorpPermList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetAgentPermListRsp"
+  /linkedcorp/user/get:
+    post:
+      tags:
+      - "linkedcorp"
+      summary: "获取互联企业成员详细信息"
+      description: "获取互联企业成员详细信息"
+      operationId: "getLinkedcorpUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetLinkedcorpUserReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetLinkedcorpUserRsp"
+  /linkedcorp/user/simplelist:
+    post:
+      tags:
+      - "linkedcorp"
+      summary: "获取互联企业部门成员"
+      description: "获取互联企业部门成员"
+      operationId: "getLinkedcorpUserSimplelist"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetLinkedcorpUserSimplelistReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetLinkedcorpUserSimplelistRsp"
+  /linkedcorp/user/list:
+    post:
+      tags:
+      - "linkedcorp"
+      summary: "获取互联企业部门成员详情"
+      description: "获取互联企业部门成员详情"
+      operationId: "getLinkedcorpUserList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetLinkedcorpUserListReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetLinkedcorpUserListRsp"
+  /linkedcorp/department/list:
+    post:
+      tags:
+      - "linkedcorp"
+      summary: "获取互联企业部门列表"
+      description: "获取互联企业部门列表"
+      operationId: "getLinkedcorpDepartmentList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetLinkedcorpDepartmentListReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetLinkedcorpDepartmentListRsp"
+  /batch/syncuser:
+    post:
+      tags:
+      - "user"
+      summary: "增量更新成员"
+      description: "本接口以userid（帐号）为主键，增量更新企业微信通讯录成员。请先下载CSV模板(下载增量更新成员模版)，根据需求填写文件\
+        内容。注意事项：1.模板中的部门需填写部门ID，多个部门用分号分隔，部门ID必须为数字，根部门的部门id默认为1;2.文件中存在、通讯录中也存在的成\
+        员，更新成员在文件中指定的字段值;3.文件中存在、通讯录中不存在的成员，执行添加操作;4.通讯录中存在、文件中不存在的成员，保持不变;5.成员字段更\
+        新规则：可自行添加扩展字段。文件中有指定的字段，以指定的字段值为准；文件中没指定的字段，不更新;"
+      operationId: "syncBatchUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/BatchSyncuserReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BatchSyncuserRsp"
+  /batch/replaceuser:
+    post:
+      tags:
+      - "user"
+      summary: "全量覆盖成员"
+      description: "本接口以userid为主键，全量覆盖企业的通讯录成员，任务完成后企业的通讯录成员与提交的文件完全保持一致。请先下载CSV文件\
+        (下载全量覆盖成员模版)，根据需求填写文件内容。注意事项：1.模板中的部门需填写部门ID，多个部门用分号分隔，部门ID必须为数字，根部门的部门id默\
+        认为1;2.文件中存在、通讯录中也存在的成员，完全以文件为准;3.文件中存在、通讯录中不存在的成员，执行添加操作;4.通讯录中存在、文件中不存在的成\
+        员，执行删除操作。出于安全考虑，下面两种情形系统将中止导入并返回相应的错误码。4.1.需要删除的成员多于50人，且多于现有人数的20%以上;4.2.需\
+        要删除的成员少于50人，且多于现有人数的80%以上5.成员字段更新规则：可自行添加扩展字段。文件中有指定的字段，以指定的字段值为准；文件中没指定的字\
+        段，不更新"
+      operationId: "replaceBatchUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/BatchReplaceuserReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BatchReplaceuserRsp"
+  /batch/replaceparty:
+    post:
+      tags:
+      - "department"
+      summary: "全量覆盖部门"
+      description: "本接口以partyid为键，全量覆盖企业的通讯录组织架构，任务完成后企业的通讯录组织架构与提交的文件完全保持一致。请先下载\
+        CSV文件(下载全量覆盖部门模版)，根据需求填写文件内容。注意事项：1.文件中存在、通讯录中也存在的部门，执行修改操作;2.文件中存在、通讯录中不存\
+        在的部门，执行添加操作;3.文件中不存在、通讯录中存在的部门，当部门下没有任何成员或子部门时，执行删除操作;4.文件中不存在、通讯录中存在的部门，当\
+        部门下仍有成员或子部门时，暂时不会删除，当下次导入成员把人从部门移出后自动删除;5.CSV文件中，部门名称、部门ID、父部门ID为必填字段，部门ID必\
+        须为数字，根部门的部门id默认为1；排序为可选字段，置空或填0不修改排序, order值大的排序靠前。"
+      operationId: "replaceBatchDepartment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/BatchReplacepartyReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BatchReplacepartyRsp"
+  /batch/getresult:
+    get:
+      tags:
+      - "department"
+      summary: "获取异步任务结果"
+      description: "获取异步任务结果"
+      operationId: "getBatchDepartmentResult"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "jonid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Jonid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BatchGetresultRsp"
+  /service/get_provider_token:
+    post:
+      tags:
+      - "service"
+      summary: "获取服务商凭证"
+      description: "获取服务商凭证"
+      operationId: "getserviceProviderToken"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetServiceProviderTokenReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetServiceProviderTokenRsp"
+  /service/get_suite_token:
+    post:
+      tags:
+      - "service"
+      summary: "获取第三方应用凭证"
+      description: "该API用于获取第三方应用凭证（suite_access_token）。由于第三方服务商可能托管了大量的企业，其安全问题造成\
+        的影响会更加严重，故API中除了合法来源IP校验之外，还额外增加了suite_ticket作为安全凭证。获取suite_access_token时，\
+        需要suite_ticket参数。suite_ticket由企业微信后台定时推送给“指令回调URL”，每十分钟更新一次，见推送suite_ticket。\
+        suite_ticket实际有效期为30分钟，可以容错连续两次获取suite_ticket失败的情况，但是请永远使用最新接收到的suite_ticket。\
+        通过本接口获取的suite_access_token有效期为2小时，开发者需要进行缓存，不可频繁获取。"
+      operationId: "getServiceSuiteToken"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetServiceSuiteTokenReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetServiceSuiteTokenRsp"
+  /service/get_pre_auth_code:
+    get:
+      tags:
+      - "service"
+      summary: "获取预授权码"
+      description: "该API用于获取预授权码。预授权码用于企业授权时的第三方服务商安全验证。"
+      operationId: "getServicePreAuthCode"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "suite_access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "SuiteAccessToken"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetServicePreAuthCodeRsp"
+  /service/set_session_info:
+    post:
+      tags:
+      - "service"
+      summary: "设置授权配置"
+      description: "该接口可对某次授权进行配置。可支持测试模式（应用未发布时）。"
+      operationId: "setServiceSessionInfo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "suite_access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "SuiteAccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/SetServiceSessionInfoReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+  /service/get_permanent_code:
+    post:
+      tags:
+      - "service"
+      summary: "获取企业永久授权码"
+      description: "该API用于使用临时授权码换取授权方的永久授权码，并换取授权信息、企业access_token，临时授权码一次有效。建议第三\
+        方以userid为主键，来建立自己的管理员账号。"
+      operationId: "getServicePermanentCode"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "suite_access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "SuiteAccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetServicePermanentCodeReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetServicePermanentCodeRsp"
+  /service/get_auth_info:
+    post:
+      tags:
+      - "service"
+      summary: "获取企业授权信息"
+      description: "该API用于通过永久授权码换取企业微信的授权信息。 永久code的获取，是通过临时授权码使用get_permanent_code\
+        \ 接口获取到的permanent_code。"
+      operationId: "getServiceAuthInfo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "suite_access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "SuiteAccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetServiceAuthInfoReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetServiceAuthInfoRsp"
+  /service/get_corp_token:
+    post:
+      tags:
+      - "service"
+      summary: "获取企业凭证"
+      description: "第三方服务商在取得企业的永久授权码后，通过此接口可以获取到企业的access_token。获取后可通过通讯录、应用、消息等企\
+        业接口来运营这些应用。此处获得的企业access_token与企业获取access_token拿到的token，本质上是一样的，只不过获取方式不同。\
+        获取之后，就跟普通企业一样使用token调用API接口"
+      operationId: "getServiceCorpToken"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "suite_access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "SuiteAccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetServiceCorpTokenReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetServiceCorpTokenRsp"
+  /service/get_admin_list:
+    post:
+      tags:
+      - "service"
+      summary: "获取应用的管理员列表"
+      description: "第三方服务商可以用此接口获取授权企业中某个第三方应用的管理员列表(不包括外部管理员)，以便服务商在用户进入应用主页之后根据是\
+        否管理员身份做权限的区分。该应用必须与SUITE_ACCESS_TOKEN对应的suiteid对应，否则没权限查看"
+      operationId: "getServiceAdminList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "suite_access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "SuiteAccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GetServiceAdminListReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetServiceAdminListRsp"
+  /agent/get:
+    get:
+      tags:
+      - "agent"
+      summary: "获取指定的应用详情"
+      description: "对于互联企业的应用，如果需要获取应用可见范围内其他互联企业的部门与成员，请调用互联企业-获取应用可见范围接口"
+      operationId: "getAgent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "agentid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Agentid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetAgentRsp"
+  /agent/list:
+    post:
+      tags:
+      - "agent"
+      summary: "获取access_token对应的应用列表"
+      description: "获取access_token对应的应用列表"
+      operationId: "getAgentList"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetAgentListRsp"
+  /agent/set:
+    post:
+      tags:
+      - "agent"
+      summary: "设置应用"
+      description: "设置应用"
+      operationId: "setAgent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/SetAgentReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SetAgentRsp"
+  /menu/create:
+    post:
+      tags:
+      - "menu"
+      summary: "创建菜单"
+      description: "自定义菜单接口可实现多种类型按钮"
+      operationId: "createMenu"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/CreateMenuReq"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CreateMenuRsp"
+  /menu/get:
+    get:
+      tags:
+      - "menu"
+      summary: "获取菜单"
+      description: "获取菜单"
+      operationId: "getMenu"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "agentid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Agentid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GetMenuRsp"
+  /menu/delete:
+    get:
+      tags:
+      - "menu"
+      summary: "删除菜单"
+      description: "删除菜单"
+      operationId: "deleteMenu"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "access_token"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "AccessToken"
+      - name: "agentid"
+        in: "query"
+        required: true
+        type: "string"
+        x-exportParamName: "Agentid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BaseResponse"
+definitions:
+  GetMenuRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      button:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+            name:
+              type: "string"
+            key:
+              type: "string"
+            sub_button:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  type:
+                    type: "string"
+                  name:
+                    type: "string"
+                  key:
+                    type: "string"
+                  pagepath:
+                    type: "string"
+                  appid:
+                    type: "string"
+    title: "GetMenuRsp"
+    example:
+      errcode: 0
+      button:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  CreateMenuRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+    title: "CreateMenuRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+  CreateMenuReq:
+    type: "object"
+    properties:
+      button:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+            name:
+              type: "string"
+            key:
+              type: "string"
+            sub_button:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  type:
+                    type: "string"
+                  name:
+                    type: "string"
+                  key:
+                    type: "string"
+                  pagepath:
+                    type: "string"
+                  appid:
+                    type: "string"
+    title: "CreateMenuReq"
+    example:
+      button:
+      - "{}"
+      - "{}"
+  GetAgentListRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      agentlist:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+            agentid:
+              type: "integer"
+              format: "int32"
+            square_logo_url:
+              type: "string"
+    title: "GetAgentListRsp"
+    example:
+      errcode: 0
+      agentlist:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  SetAgentRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+    title: "SetAgentRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+  SetAgentReq:
+    type: "object"
+    properties:
+      agentid:
+        type: "integer"
+        format: "int32"
+      report_location_flag:
+        type: "integer"
+        format: "int32"
+      logo_mediaid:
+        type: "string"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      redirect_domain:
+        type: "string"
+      isreportenter:
+        type: "integer"
+        format: "int32"
+      home_url:
+        type: "string"
+    title: "SetAgentReq"
+    example:
+      isreportenter: 1
+      agentid: 0
+      redirect_domain: "redirect_domain"
+      home_url: "home_url"
+      name: "name"
+      description: "description"
+      report_location_flag: 6
+      logo_mediaid: "logo_mediaid"
+  GetAgentRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      agentid:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      square_logo_url:
+        type: "string"
+      description:
+        type: "string"
+      close:
+        type: "integer"
+        format: "int32"
+      redirect_domain:
+        type: "string"
+      report_location_flag:
+        type: "integer"
+        format: "int32"
+      isreportenter:
+        type: "integer"
+        format: "int32"
+      home_url:
+        type: "string"
+      allow_userinfos:
+        type: "object"
+        properties:
+          user:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                userid:
+                  type: "string"
+      allow_partys:
+        type: "object"
+        properties:
+          partyid:
+            type: "array"
+            items:
+              type: "integer"
+              format: "int32"
+      allow_tags:
+        type: "object"
+        properties:
+          tagid:
+            type: "array"
+            items:
+              type: "integer"
+              format: "int32"
+    title: "GetAgentReq"
+    example:
+      errcode: 0
+      square_logo_url: "square_logo_url"
+      agentid: 6
+      home_url: "home_url"
+      errmsg: "errmsg"
+      description: "description"
+      allow_tags: "{}"
+      isreportenter: 5
+      redirect_domain: "redirect_domain"
+      name: "name"
+      allow_partys: "{}"
+      allow_userinfos: "{}"
+      close: 1
+      report_location_flag: 5
+  GetServiceAdminListRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      admin:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            open_userid:
+              type: "string"
+            auth_type:
+              type: "integer"
+              format: "int32"
+    title: "GetServiceAdminListRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      admin:
+      - "{}"
+      - "{}"
+  GetServiceAdminListReq:
+    type: "object"
+    properties:
+      auth_corpid:
+        type: "string"
+      agentid:
+        type: "integer"
+        format: "int32"
+    title: "GetServiceAdminListReq"
+    example:
+      agentid: 0
+      auth_corpid: "auth_corpid"
+  GetServiceCorpTokenRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      access_token:
+        type: "string"
+      expires_in:
+        type: "integer"
+        format: "int32"
+    title: "GetServiceCorpTokenRsp"
+    example:
+      errcode: 0
+      access_token: "access_token"
+      errmsg: "errmsg"
+      expires_in: 6
+  GetServiceCorpTokenReq:
+    type: "object"
+    properties:
+      auth_corpid:
+        type: "string"
+        description: "授权方corpid"
+      permanent_code:
+        type: "string"
+        description: "永久授权码，通过get_permanent_code获取"
+    title: "GetServiceCorpTokenReq"
+    example:
+      auth_corpid: "auth_corpid"
+      permanent_code: "permanent_code"
+  GetServiceAuthInfoRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      expires_in:
+        type: "integer"
+        format: "int32"
+      permanent_code:
+        type: "string"
+      dealer_corp_info:
+        type: "object"
+        properties:
+          corpid:
+            type: "string"
+          corp_name:
+            type: "string"
+          auth_corp_info:
+            type: "object"
+            properties:
+              corpid:
+                type: "string"
+              corp_name:
+                type: "string"
+              corp_type:
+                type: "string"
+              corp_square_logo_url:
+                type: "string"
+              corp_user_max:
+                type: "integer"
+                format: "int32"
+              corp_agent_max:
+                type: "integer"
+                format: "int32"
+              corp_full_name:
+                type: "string"
+              verified_end_time:
+                type: "integer"
+                format: "int32"
+              subject_type:
+                type: "integer"
+                format: "int32"
+              corp_wxqrcode:
+                type: "string"
+              corp_scale:
+                type: "string"
+              corp_industry:
+                type: "string"
+              corp_sub_industry:
+                type: "string"
+              location:
+                type: "string"
+      auth_info:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            agentid:
+              type: "integer"
+              format: "int32"
+            name:
+              type: "string"
+            round_logo_url:
+              type: "string"
+            square_logo_url:
+              type: "string"
+            appid:
+              type: "integer"
+              format: "int32"
+            auth_mode:
+              type: "integer"
+              format: "int32"
+            privilege:
+              type: "object"
+              properties:
+                level:
+                  type: "integer"
+                  format: "int32"
+                  description: "权限等级。1:通讯录基本信息只读2:通讯录全部信息只读3:通讯录全部信息读写4:单个基本信息只读5:通\
+                    讯录全部信息只写"
+                allow_party:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    format: "int32"
+                allow_user:
+                  type: "array"
+                  items:
+                    type: "string"
+                allow_tag:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    format: "int32"
+                extra_party:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    format: "int32"
+                extra_user:
+                  type: "array"
+                  items:
+                    type: "string"
+                extra_tag:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    format: "int32"
+            shared_from:
+              type: "object"
+              properties:
+                corpid:
+                  type: "string"
+    title: "GetServiceAuthInfoRsp"
+    example:
+      errcode: 0
+      dealer_corp_info: "{}"
+      errmsg: "errmsg"
+      auth_info:
+      - "{}"
+      - "{}"
+      expires_in: 6
+      permanent_code: "permanent_code"
+  GetServiceAuthInfoReq:
+    type: "object"
+    properties:
+      auth_corpid:
+        type: "string"
+      permanent_code:
+        type: "string"
+    title: "GetServiceAuthInfoReq"
+    example:
+      auth_corpid: "auth_corpid"
+      permanent_code: "permanent_code"
+  GetServicePermanentCodeRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      access_token:
+        type: "string"
+      expires_in:
+        type: "integer"
+        format: "int32"
+      permanent_code:
+        type: "string"
+      dealer_corp_info:
+        type: "object"
+        properties:
+          corpid:
+            type: "string"
+          corp_name:
+            type: "string"
+      auth_corp_info:
+        type: "object"
+        properties:
+          corpid:
+            type: "string"
+          corp_name:
+            type: "string"
+          corp_type:
+            type: "string"
+          corp_square_logo_url:
+            type: "string"
+          corp_user_max:
+            type: "integer"
+            format: "int32"
+          corp_agent_max:
+            type: "integer"
+            format: "int32"
+          corp_full_name:
+            type: "string"
+          verified_end_time:
+            type: "integer"
+            format: "int32"
+          subject_type:
+            type: "integer"
+            format: "int32"
+          corp_wxqrcode:
+            type: "string"
+          corp_scale:
+            type: "string"
+          corp_industry:
+            type: "string"
+          corp_sub_industry:
+            type: "string"
+          location:
+            type: "string"
+      auth_info:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            agentid:
+              type: "integer"
+              format: "int32"
+            name:
+              type: "string"
+            round_logo_url:
+              type: "string"
+            square_logo_url:
+              type: "string"
+            appid:
+              type: "integer"
+              format: "int32"
+            auth_mode:
+              type: "integer"
+              format: "int32"
+            privilege:
+              type: "object"
+              properties:
+                level:
+                  type: "integer"
+                  format: "int32"
+                  description: "权限等级。1:通讯录基本信息只读2:通讯录全部信息只读3:通讯录全部信息读写4:单个基本信息只读5:通\
+                    讯录全部信息只写"
+                allow_party:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    format: "int32"
+                allow_user:
+                  type: "array"
+                  items:
+                    type: "string"
+                allow_tag:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    format: "int32"
+                extra_party:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    format: "int32"
+                extra_user:
+                  type: "array"
+                  items:
+                    type: "string"
+                extra_tag:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    format: "int32"
+            shared_from:
+              type: "object"
+              properties:
+                corpid:
+                  type: "string"
+      auth_user_info:
+        type: "object"
+        properties:
+          userid:
+            type: "string"
+          open_userid:
+            type: "string"
+          name:
+            type: "string"
+            description: "授权管理员的name，可能为空（企业互联由上级企业共享第三方应用给下级时，不返回授权的管理员信息）"
+          avatar:
+            type: "string"
+      register_code_info:
+        type: "object"
+        properties:
+          register_code:
+            type: "string"
+          template_id:
+            type: "string"
+          state:
+            type: "string"
+    title: "GetServicePermanentCodeRsp"
+    example:
+      errcode: 0
+      access_token: "access_token"
+      auth_user_info: "{}"
+      auth_corp_info: "{}"
+      register_code_info: "{}"
+      dealer_corp_info: "{}"
+      errmsg: "errmsg"
+      auth_info:
+      - "{}"
+      - "{}"
+      expires_in: 6
+      permanent_code: "permanent_code"
+  GetServicePermanentCodeReq:
+    type: "object"
+    properties:
+      auth_code:
+        type: "string"
+    title: "GetServicePermanentCodeReq"
+    example:
+      auth_code: "auth_code"
+  SetServiceSessionInfoReq:
+    type: "object"
+    properties:
+      pre_auth_code:
+        type: "string"
+      session_info:
+        type: "object"
+        properties:
+          appid:
+            type: "array"
+            description: "允许进行授权的应用id，如1、2、3， 不填或者填空数组都表示允许授权套件内所有应用（仅旧的多应用套件可传此参数\
+              ，新开发者可忽略）"
+            items:
+              type: "integer"
+              format: "int32"
+          auth_type:
+            type: "integer"
+            format: "int32"
+            description: "授权类型：0 正式授权， 1 测试授权。 默认值为0。注意，请确保应用在正式发布后的授权类型为“正式授权”"
+    title: "SetServiceSessionInfoReq"
+    example:
+      session_info: "{}"
+      pre_auth_code: "pre_auth_code"
+  GetServicePreAuthCodeReq:
+    type: "object"
+    properties:
+      corpid:
+        type: "string"
+      provider_secret:
+        type: "string"
+    title: "GetServicePreAuthCodeReq"
+  GetServicePreAuthCodeRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      pre_auth_code:
+        type: "string"
+      expires_in:
+        type: "integer"
+        format: "int32"
+    title: "GetServicePreAuthCodeRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      pre_auth_code: "pre_auth_code"
+      expires_in: 6
+  GetServiceSuiteTokenReq:
+    type: "object"
+    properties:
+      suite_id:
+        type: "string"
+      suite_secret:
+        type: "string"
+      suite_ticket:
+        type: "string"
+    title: "GetServiceSuiteTokenReq"
+    example:
+      suite_ticket: "suite_ticket"
+      suite_secret: "suite_secret"
+      suite_id: "suite_id"
+  GetServiceSuiteTokenRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      suite_access_token:
+        type: "string"
+      expires_in:
+        type: "integer"
+        format: "int32"
+    title: "GetServiceSuiteTokenRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      suite_access_token: "suite_access_token"
+      expires_in: 6
+  GetServiceProviderTokenRsp:
+    type: "object"
+    properties:
+      provider_access_token:
+        type: "string"
+      expires_in:
+        type: "integer"
+        format: "int32"
+    title: "GetServiceProviderTokenRsp"
+    example:
+      provider_access_token: "provider_access_token"
+      expires_in: 0
+  GetServiceProviderTokenReq:
+    type: "object"
+    properties:
+      corpid:
+        type: "string"
+      provider_secret:
+        type: "string"
+    title: "GetServiceProviderTokenReq"
+    example:
+      corpid: "corpid"
+      provider_secret: "provider_secret"
+  BatchGetresultRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      status:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+        format: "int32"
+      total:
+        type: "integer"
+        format: "int32"
+      percentage:
+        type: "integer"
+        format: "int32"
+      result:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            errmsg:
+              type: "string"
+            errcode:
+              type: "integer"
+              format: "int32"
+            action:
+              type: "integer"
+              format: "int32"
+            partyid:
+              type: "integer"
+              format: "int32"
+    title: "BatchGetresultRsp"
+    example:
+      errcode: 0
+      result:
+      - "{}"
+      - "{}"
+      total: 1
+      percentage: 5
+      errmsg: "errmsg"
+      type: "type"
+      status: 6
+  BatchGetresultUser:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+    title: "BatchGetresultUser"
+  BatchGetresultParty:
+    type: "object"
+    properties:
+      action:
+        type: "integer"
+        format: "int32"
+      partyid:
+        type: "integer"
+        format: "int32"
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+    title: "BatchGetresultParty"
+  BatchReplacepartyRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      jobid:
+        type: "string"
+    title: "BatchReplacepartyRsp"
+    example:
+      errcode: 0
+      jobid: "jobid"
+      errmsg: "errmsg"
+  BatchReplacepartyReq:
+    type: "object"
+    properties:
+      media_id:
+        type: "string"
+      to_invite:
+        type: "boolean"
+      callback:
+        type: "object"
+        properties:
+          url:
+            type: "string"
+          token:
+            type: "string"
+          encodingaeskey:
+            type: "string"
+    title: "BatchReplacepartyReq"
+    example:
+      media_id: "media_id"
+      callback: "{}"
+      to_invite: true
+  BatchReplaceuserRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      jobid:
+        type: "string"
+    title: "BatchReplaceuserRsp"
+    example:
+      errcode: 0
+      jobid: "jobid"
+      errmsg: "errmsg"
+  BatchReplaceuserReq:
+    type: "object"
+    properties:
+      media_id:
+        type: "string"
+      to_invite:
+        type: "boolean"
+      callback:
+        type: "object"
+        properties:
+          url:
+            type: "string"
+          token:
+            type: "string"
+          encodingaeskey:
+            type: "string"
+    title: "BatchReplaceuserReq"
+    example:
+      media_id: "media_id"
+      callback: "{}"
+      to_invite: true
+  BatchSyncuserRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      jonid:
+        type: "string"
+    title: "BatchSyncuserRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      jonid: "jonid"
+  BatchSyncuserReq:
+    type: "object"
+    properties:
+      media_id:
+        type: "string"
+      to_invite:
+        type: "boolean"
+      callback:
+        type: "object"
+        properties:
+          url:
+            type: "string"
+          token:
+            type: "string"
+          encodingaeskey:
+            type: "string"
+    title: "BatchSyncuserReq"
+    example:
+      media_id: "media_id"
+      callback: "{}"
+      to_invite: true
+  GetLinkedcorpDepartmentListRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "number"
+        format: "int32"
+      errmsg:
+        type: "string"
+      department_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            department_id:
+              type: "integer"
+              format: "int32"
+            department_name:
+              type: "string"
+            parentid:
+              type: "string"
+            order:
+              type: "integer"
+              format: "int32"
+    title: "GetLinkedcorpDepartmentListRsp"
+    example:
+      errcode: 0.80082819046101150206595775671303272247314453125
+      department_list:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  GetLinkedcorpDepartmentListReq:
+    type: "object"
+    properties:
+      department_id:
+        type: "string"
+        description: "该字段用的是互联应用可见范围接口返回的department_ids参数，用的是 linkedid + ’/‘ + department_id\
+          \ 拼成的字符串"
+    title: "GetLinkedcorpDepartmentListReq"
+    example:
+      department_id: "department_id"
+  GetLinkedcorpUserListRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      userlist:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            name:
+              type: "string"
+            mobile:
+              type: "string"
+            telephone:
+              type: "string"
+            email:
+              type: "string"
+            position:
+              type: "string"
+            corpid:
+              type: "string"
+            department:
+              type: "array"
+              items:
+                type: "string"
+                description: "成员所属部门id列表，这个字段只会返回传入的department_id所属的互联企业里的部门id"
+            extattr:
+              type: "object"
+              properties:
+                attrs:
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      name:
+                        type: "string"
+                      type:
+                        type: "integer"
+                        format: "int32"
+                      text:
+                        type: "object"
+                        properties:
+                          value:
+                            type: "string"
+                      web:
+                        type: "object"
+                        properties:
+                          url:
+                            type: "string"
+                          title:
+                            type: "string"
+    title: "GetLinkedcorpUserListRsp"
+    example:
+      errcode: 0
+      userlist:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  GetLinkedcorpUserListReq:
+    type: "object"
+    properties:
+      department_id:
+        type: "string"
+        description: "该字段用的是互联应用可见范围接口返回的department_ids参数，用的是 linkedid + ’/‘ + department_id\
+          \ 拼成的字符串"
+      fetch_child:
+        type: "boolean"
+    title: "GetLinkedcorpUserListReq"
+    example:
+      fetch_child: true
+      department_id: "department_id"
+  GetLinkedcorpUserSimplelistRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      userlist:
+        type: "object"
+        properties:
+          userid:
+            type: "string"
+          name:
+            type: "string"
+          department:
+            type: "array"
+            items:
+              type: "string"
+          corpid:
+            type: "string"
+    title: "GetLinkedcorpUserSimplelistRsp"
+    example:
+      errcode: 0
+      userlist: "{}"
+      errmsg: "errmsg"
+  GetLinkedcorpUserSimplelistReq:
+    type: "object"
+    properties:
+      department_id:
+        type: "string"
+      fetch_child:
+        type: "boolean"
+    title: "GetLinkedcorpUserSimplelistReq"
+    example:
+      fetch_child: true
+      department_id: "department_id"
+  GetLinkedcorpUserRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      user_info:
+        type: "object"
+        properties:
+          userid:
+            type: "string"
+          name:
+            type: "string"
+          department:
+            type: "array"
+            items:
+              type: "string"
+          mobile:
+            type: "string"
+          telephone:
+            type: "string"
+          email:
+            type: "string"
+          position:
+            type: "string"
+          corpid:
+            type: "string"
+          extattr:
+            type: "object"
+            properties:
+              attrs:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    name:
+                      type: "string"
+                    value:
+                      type: "string"
+                    type:
+                      type: "integer"
+                      format: "int32"
+                    text:
+                      type: "object"
+                      properties:
+                        value:
+                          type: "string"
+                    web:
+                      type: "object"
+                      properties:
+                        url:
+                          type: "string"
+                        title:
+                          type: "string"
+    title: "GetLinkedcorpUserRsp"
+    example:
+      errcode: 0
+      user_info: "{}"
+      errmsg: "errmsg"
+  LinkedcorpUserInfoAttrText:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      value:
+        type: "string"
+      type:
+        type: "integer"
+        format: "int32"
+      text:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+    title: "LinkedcorpUserInfoAttrText"
+  LinkedcorpUserInfoAttrWeb:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      type:
+        type: "integer"
+        format: "int32"
+      web:
+        type: "object"
+        properties:
+          url:
+            type: "string"
+          title:
+            type: "string"
+    title: "LinkedcorpUserInfoAttrWeb"
+  GetLinkedcorpUserReq:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+        description: "该字段用的是互联应用可见范围接口返回的userids参数，用的是 CorpId + ’/‘ + USERID 拼成的字符\
+          串; \"CORPID/USERID\""
+    title: "GetLinkedcorpUserReq"
+  GetAgentPermListRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      userids:
+        type: "array"
+        items:
+          type: "string"
+      department_ids:
+        type: "array"
+        items:
+          type: "string"
+    title: "GetAgentPermListRsp"
+    example:
+      errcode: 0
+      userids:
+      - "userids"
+      - "userids"
+      errmsg: "errmsg"
+      department_ids:
+      - "department_ids"
+      - "department_ids"
+  GetDepartmentListRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      department:
+        type: "array"
+        items:
+          $ref: "#/definitions/Department"
+    title: "GetDepartmentListRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      department:
+      - name: "name"
+        id: 6
+        parentid: 1
+        name_en: "name_en"
+        order: 5
+      - name: "name"
+        id: 6
+        parentid: 1
+        name_en: "name_en"
+        order: 5
+  Department:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      name_en:
+        type: "string"
+      parentid:
+        type: "integer"
+        format: "int32"
+      order:
+        type: "integer"
+        format: "int32"
+    title: "Department"
+    example:
+      name: "name"
+      id: 6
+      parentid: 1
+      name_en: "name_en"
+      order: 5
+  UpdateDepartmentReq:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      name_en:
+        type: "string"
+      parentid:
+        type: "integer"
+        format: "int32"
+      order:
+        type: "integer"
+        format: "int32"
+    title: "UpdateDepartmentReq"
+    example:
+      name: "name"
+      id: 0
+      parentid: 6
+      name_en: "name_en"
+      order: 1
+  CreateDepartmentRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      id:
+        type: "integer"
+        format: "int32"
+    title: "CreateDepartmentRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      id: 6
+  CreateDepartmentReq:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "部门名称。同一个层级的部门名称不能重复。长度限制为1~32个字符，字符不能包括\\:?”<>｜"
+      name_en:
+        type: "string"
+      parentid:
+        type: "integer"
+        format: "int32"
+      order:
+        type: "integer"
+        format: "int32"
+      id:
+        type: "integer"
+        format: "int32"
+        description: "部门id，32位整型，指定时必须大于1。若不填该参数，将自动生成id"
+    title: "CreateDepartmentReq"
+    example:
+      name: "name"
+      id: 1
+      parentid: 0
+      name_en: "name_en"
+      order: 6
+  GetAppchatReq:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      chat_info:
+        type: "object"
+        properties:
+          chatid:
+            type: "string"
+          name:
+            type: "string"
+          owner:
+            type: "string"
+          userlist:
+            type: "array"
+            items:
+              type: "string"
+    title: "GetAppchatReq"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      chat_info: "{}"
+  UpdateAppchatReq:
+    type: "object"
+    properties:
+      chatid:
+        type: "string"
+      name:
+        type: "string"
+      owner:
+        type: "string"
+      add_user_list:
+        type: "array"
+        items:
+          type: "string"
+      del_user_list:
+        type: "array"
+        items:
+          type: "string"
+    title: "UpdateAppchatReq"
+    example:
+      owner: "owner"
+      chatid: "chatid"
+      del_user_list:
+      - "del_user_list"
+      - "del_user_list"
+      name: "name"
+      add_user_list:
+      - "add_user_list"
+      - "add_user_list"
+  CreateAppchatRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      chatid:
+        type: "string"
+    title: "CreateAppchatRsp"
+    example:
+      errcode: 0
+      chatid: "chatid"
+      errmsg: "errmsg"
+  CreateAppchatReq:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      owner:
+        type: "string"
+      chatid:
+        type: "string"
+      userlist:
+        type: "array"
+        items:
+          type: "string"
+    title: "CreateAppchatReq"
+    example:
+      owner: "owner"
+      userlist:
+      - "userlist"
+      - "userlist"
+      chatid: "chatid"
+      name: "name"
+  MediaUploadImgRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      url:
+        type: "string"
+    title: "MediaUploadImgRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      url: "url"
+  MediaUploadRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      type:
+        type: "string"
+      media_id:
+        type: "string"
+      created_at:
+        type: "string"
+    title: "MediaUploadRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      media_id: "media_id"
+      created_at: "created_at"
+      type: "type"
+  GetGroupchatStatisticGroupByDayRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      items:
+        type: "object"
+        properties:
+          stat_time:
+            type: "integer"
+            format: "int32"
+          data:
+            type: "object"
+            properties:
+              new_chat_cnt:
+                type: "integer"
+                format: "int32"
+              chat_total:
+                type: "integer"
+                format: "int32"
+              chat_has_msg:
+                type: "integer"
+                format: "int32"
+              new_member_cnt:
+                type: "integer"
+                format: "int32"
+              member_total:
+                type: "integer"
+                format: "int32"
+              member_has_msg:
+                type: "integer"
+                format: "int32"
+              msg_total:
+                type: "integer"
+                format: "int32"
+    title: "GetGroupchatStatisticGroupByDayRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      items: "{}"
+  GetGroupchatStatisticGroupByDayReq:
+    type: "object"
+    properties:
+      day_begin_time:
+        type: "integer"
+        format: "int32"
+      day_end_time:
+        type: "integer"
+        format: "int32"
+      owner_filter:
+        type: "object"
+        properties:
+          userid_list:
+            type: "array"
+            items:
+              type: "string"
+    title: "GetGroupchatStatisticGroupByDayReq"
+    example:
+      day_end_time: 6
+      owner_filter: "{}"
+      day_begin_time: 0
+  GetGroupchatStatisticRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      total:
+        type: "integer"
+        format: "int32"
+      next_offset:
+        type: "integer"
+        format: "int32"
+      items:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            owner:
+              type: "string"
+            data:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  new_chat_cnt:
+                    type: "integer"
+                    format: "int32"
+                  chat_total:
+                    type: "integer"
+                    format: "int32"
+                  chat_has_msg:
+                    type: "integer"
+                    format: "int32"
+                  new_member_cnt:
+                    type: "integer"
+                    format: "int32"
+                  member_total:
+                    type: "integer"
+                    format: "int32"
+                  member_has_msg:
+                    type: "integer"
+                    format: "int32"
+                  msg_total:
+                    type: "integer"
+                    format: "int32"
+    title: "GetGroupchatStatisticRsp"
+    example:
+      errcode: 0
+      total: 6
+      errmsg: "errmsg"
+      next_offset: 1
+      items:
+      - "{}"
+      - "{}"
+  GetGroupchatStatisticReq:
+    type: "object"
+    properties:
+      day_begin_time:
+        type: "integer"
+        format: "int32"
+      day_end_time:
+        type: "integer"
+        format: "int32"
+      owner_filter:
+        type: "object"
+        properties:
+          userid_list:
+            type: "array"
+            items:
+              type: "string"
+      order_by:
+        type: "integer"
+        format: "int32"
+      order_asc:
+        type: "integer"
+        format: "int32"
+      offset:
+        type: "integer"
+        format: "int32"
+      limit:
+        type: "integer"
+        format: "int32"
+    title: "GetGroupchatStatisticReq"
+    example:
+      offset: 5
+      day_end_time: 6
+      owner_filter: "{}"
+      limit: 2
+      order_by: 1
+      order_asc: 5
+      day_begin_time: 0
+  GetUserBehaviorDataRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      behavior_data:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            stat_time:
+              type: "integer"
+              format: "int32"
+            chat_cnt:
+              type: "integer"
+              format: "int32"
+            message_cnt:
+              type: "integer"
+              format: "int32"
+            reply_percentage:
+              type: "number"
+              format: "float"
+            avg_reply_time:
+              type: "integer"
+              format: "int32"
+            negative_feedback_cnt:
+              type: "integer"
+              format: "int32"
+            new_apply_cnt:
+              type: "integer"
+              format: "int32"
+            new_contact_cnt:
+              type: "integer"
+              format: "int32"
+    title: "GetUserBehaviorDataRsp"
+    example:
+      errcode: 0
+      behavior_data:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  GetUserBehaviorDataReq:
+    type: "object"
+    properties:
+      userid:
+        type: "array"
+        items:
+          type: "string"
+      partyid:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+      start_time:
+        type: "integer"
+        format: "int32"
+      end_time:
+        type: "integer"
+        format: "int32"
+    title: "GetUserBehaviorDataReq"
+    example:
+      start_time: 6
+      end_time: 1
+      partyid:
+      - 0
+      - 0
+      userid:
+      - "userid"
+      - "userid"
+  AddGroupWelcomeTemplateRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      template_id:
+        type: "string"
+    title: "AddGroupWelcomeTemplateRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      template_id: "template_id"
+  AddGroupWelcomeTemplateReq:
+    type: "object"
+    properties:
+      text:
+        type: "object"
+        properties:
+          content:
+            type: "string"
+      image:
+        type: "object"
+        properties:
+          media_id:
+            type: "string"
+          pic_url:
+            type: "string"
+      link:
+        type: "object"
+        properties:
+          title:
+            type: "string"
+          picurl:
+            type: "string"
+          desc:
+            type: "string"
+          url:
+            type: "string"
+      miniprogram:
+        type: "object"
+        properties:
+          title:
+            type: "string"
+          pic_media_id:
+            type: "string"
+          appid:
+            type: "string"
+          page:
+            type: "string"
+      agentid:
+        type: "integer"
+        format: "int32"
+        description: "授权方安装的应用agentid。仅旧的第三方多应用套件需要填此参数"
+      notify:
+        type: "integer"
+        format: "int32"
+        description: "是否通知成员将这条入群欢迎语应用到客户群中，0-不通知，1-通知， 不填则通知"
+    title: "AddGroupWelcomeTemplateReq"
+    example:
+      image: "{}"
+      agentid: 0
+      link: "{}"
+      text: "{}"
+      miniprogram: "{}"
+      notify: 6
+  SendWelcomeMsgRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+    title: "SendWelcomeMsgRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+  SendWelcomeMsgReq:
+    type: "object"
+    properties:
+      welcome_code:
+        type: "string"
+      text:
+        type: "object"
+        properties:
+          content:
+            type: "string"
+      attachments:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            msgtype:
+              type: "string"
+            image:
+              type: "object"
+              properties:
+                media_id:
+                  type: "string"
+                pic_url:
+                  type: "string"
+            link:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                picurl:
+                  type: "string"
+                desc:
+                  type: "string"
+                url:
+                  type: "string"
+            miniprogram:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                pic_media_id:
+                  type: "string"
+                appid:
+                  type: "string"
+                page:
+                  type: "string"
+            video:
+              type: "object"
+              properties:
+                media_id:
+                  type: "string"
+    title: "SendWelcomeMsgReq"
+    example:
+      attachments:
+      - "{}"
+      - "{}"
+      welcome_code: "welcome_code"
+      text: "{}"
+  GetGroupmsgSendResultRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      next_cursor:
+        type: "string"
+      send_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            external_userid:
+              type: "string"
+            chat_id:
+              type: "string"
+            userid:
+              type: "string"
+            status:
+              type: "integer"
+              format: "int32"
+            send_time:
+              type: "integer"
+              format: "int32"
+    title: "GetGroupmsgSendResultRsp"
+    example:
+      errcode: 0
+      send_list:
+      - "{}"
+      - "{}"
+      next_cursor: "next_cursor"
+      errmsg: "errmsg"
+  GetGroupmsgSendResultReq:
+    type: "object"
+    properties:
+      msgid:
+        type: "string"
+      userid:
+        type: "string"
+      limit:
+        type: "integer"
+        format: "int32"
+      cursor:
+        type: "string"
+    title: "GetGroupmsgSendResultReq"
+    example:
+      cursor: "cursor"
+      limit: 0
+      msgid: "msgid"
+      userid: "userid"
+  GetGroupmsgTaskRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      next_cursor:
+        type: "string"
+      task_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            status:
+              type: "integer"
+              format: "int32"
+            send_time:
+              type: "integer"
+              format: "int32"
+    title: "GetGroupmsgTaskRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      errmsg: "errmsg"
+      task_list:
+      - "{}"
+      - "{}"
+  GetGroupmsgTaskReq:
+    type: "object"
+    properties:
+      msgid:
+        type: "string"
+      limit:
+        type: "integer"
+        format: "int32"
+      cursor:
+        type: "string"
+    title: "GetGroupmsgTaskReq"
+    example:
+      cursor: "cursor"
+      limit: 0
+      msgid: "msgid"
+  GetGroupmsgListV2Rsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      next_cursor:
+        type: "string"
+      attachments:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            msgtype:
+              type: "string"
+            image:
+              type: "object"
+              properties:
+                media_id:
+                  type: "string"
+                pic_url:
+                  type: "string"
+            link:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                picurl:
+                  type: "string"
+                desc:
+                  type: "string"
+                url:
+                  type: "string"
+            miniprogram:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                pic_media_id:
+                  type: "string"
+                appid:
+                  type: "string"
+                page:
+                  type: "string"
+            video:
+              type: "object"
+              properties:
+                media_id:
+                  type: "string"
+    title: "GetGroupmsgListV2Rsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      attachments:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  GetGroupmsgListV2Req:
+    type: "object"
+    properties:
+      chat_type:
+        type: "string"
+      start_time:
+        type: "integer"
+        format: "int32"
+      end_time:
+        type: "integer"
+        format: "int32"
+      creator:
+        type: "string"
+      filter_type:
+        type: "integer"
+        format: "int32"
+        description: "创建人类型。0：企业发表 1：个人发表 2：所有，包括个人创建以及企业创建，默认情况下为所有类型"
+      limit:
+        type: "integer"
+        format: "int32"
+      cursor:
+        type: "string"
+    title: "GetGroupmsgListV2Req"
+    example:
+      chat_type: "chat_type"
+      cursor: "cursor"
+      start_time: 0
+      creator: "creator"
+      filter_type: 1
+      end_time: 6
+      limit: 5
+  AddMsgTemplateRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      msgid:
+        type: "string"
+      fail_list:
+        type: "array"
+        items:
+          type: "string"
+    title: "AddMsgTemplateRsp"
+    example:
+      errcode: 0
+      fail_list:
+      - "fail_list"
+      - "fail_list"
+      errmsg: "errmsg"
+      msgid: "msgid"
+  AddMsgTemplateReq:
+    type: "object"
+    properties:
+      chat_type:
+        type: "string"
+      external_userid:
+        type: "array"
+        items:
+          type: "string"
+      sender:
+        type: "string"
+      text:
+        type: "object"
+        properties:
+          content:
+            type: "string"
+      attachments:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            msgtype:
+              type: "string"
+            image:
+              type: "object"
+              properties:
+                media_id:
+                  type: "string"
+                pic_url:
+                  type: "string"
+            link:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                picurl:
+                  type: "string"
+                desc:
+                  type: "string"
+                url:
+                  type: "string"
+            miniprogram:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                pic_media_id:
+                  type: "string"
+                appid:
+                  type: "string"
+                page:
+                  type: "string"
+            video:
+              type: "object"
+              properties:
+                media_id:
+                  type: "string"
+    title: "AddMsgTemplateReq"
+    example:
+      chat_type: "chat_type"
+      external_userid:
+      - "external_userid"
+      - "external_userid"
+      attachments:
+      - "{}"
+      - "{}"
+      sender: "sender"
+      text: "{}"
+  GroupMsgImage:
+    type: "object"
+    properties:
+      msgtype:
+        type: "string"
+      image:
+        type: "object"
+        properties:
+          media_id:
+            type: "string"
+          pic_url:
+            type: "string"
+  GroupMsgLink:
+    type: "object"
+    properties:
+      msgtype:
+        type: "string"
+      link:
+        type: "object"
+        properties:
+          title:
+            type: "string"
+          picurl:
+            type: "string"
+          desc:
+            type: "string"
+          url:
+            type: "string"
+  GroupMsgMiniprogram:
+    type: "object"
+    properties:
+      msgtype:
+        type: "string"
+      miniprogram:
+        type: "object"
+        properties:
+          title:
+            type: "string"
+          pic_media_id:
+            type: "string"
+          appid:
+            type: "string"
+          page:
+            type: "string"
+  GroupMsgVideo:
+    type: "object"
+    properties:
+      msgtype:
+        type: "string"
+      video:
+        type: "object"
+        properties:
+          media_id:
+            type: "string"
+  GetMomentCommentsRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      comment_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            external_userid:
+              type: "string"
+            create_time:
+              type: "integer"
+              format: "int32"
+            like_list:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  external_userid:
+                    type: "string"
+                  create_time:
+                    type: "integer"
+                    format: "int32"
+    title: "GetMomentCommentsRsp"
+    example:
+      errcode: 0
+      comment_list:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  GetMomentCommentsReq:
+    type: "object"
+    properties:
+      moment_id:
+        type: "string"
+      userid:
+        type: "string"
+    title: "GetMomentCommentsReq"
+    example:
+      moment_id: "moment_id"
+      userid: "userid"
+  GetMomentSendResultRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      next_cursor:
+        type: "string"
+      customer_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            external_userid:
+              type: "string"
+    title: "GetMomentSendResultRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      customer_list:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  GetMomentSendResultReq:
+    type: "object"
+    properties:
+      moment_id:
+        type: "string"
+      userid:
+        type: "string"
+      cursor:
+        type: "string"
+      limit:
+        type: "integer"
+        format: "int32"
+    title: "GetMomentSendResultReq"
+    example:
+      moment_id: "moment_id"
+      cursor: "cursor"
+      limit: 0
+      userid: "userid"
+  GetMomentCustomerListRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      next_cursor:
+        type: "string"
+      customer_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            external_userid:
+              type: "string"
+    title: "GetMomentCustomerListRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      customer_list:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  GetMomentCustomerListReq:
+    type: "object"
+    properties:
+      moment_id:
+        type: "string"
+      userid:
+        type: "string"
+      cursor:
+        type: "string"
+      limit:
+        type: "integer"
+        format: "int32"
+    title: "GetMomentCustomerListReq"
+    example:
+      moment_id: "moment_id"
+      cursor: "cursor"
+      limit: 0
+      userid: "userid"
+  GetMomentTaskRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      next_cursor:
+        type: "string"
+      task_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            publish_status:
+              type: "integer"
+              format: "int32"
+    title: "GetMomentTaskRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      errmsg: "errmsg"
+      task_list:
+      - "{}"
+      - "{}"
+  GetMomentTaskReq:
+    type: "object"
+    properties:
+      moment_id:
+        type: "string"
+      cursor:
+        type: "string"
+      limit:
+        type: "integer"
+        format: "int32"
+    title: "GetMomentTaskReq"
+    example:
+      moment_id: "moment_id"
+      cursor: "cursor"
+      limit: 0
+  GetMomentListRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      next_cursor:
+        type: "string"
+      moment_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            moment_id:
+              type: "string"
+            creator:
+              type: "string"
+            create_time:
+              type: "integer"
+              format: "int32"
+            create_type:
+              type: "integer"
+              format: "int32"
+            visible_type:
+              type: "integer"
+              format: "int32"
+            text:
+              type: "object"
+              properties:
+                content:
+                  type: "string"
+            image:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  media_id:
+                    type: "string"
+            video:
+              type: "object"
+              properties:
+                media_id:
+                  type: "string"
+                thumb_media_id:
+                  type: "string"
+            link:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                url:
+                  type: "string"
+            location:
+              type: "object"
+              properties:
+                latitude:
+                  type: "string"
+                longitude:
+                  type: "string"
+                name:
+                  type: "string"
+    title: "GetMomentListRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      moment_list:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  GetMomentListReq:
+    type: "object"
+    properties:
+      start_time:
+        type: "integer"
+        format: "int32"
+        description: "朋友圈记录开始时间。Unix时间戳"
+      end_time:
+        type: "integer"
+        format: "int32"
+        description: "朋友圈记录结束时间。Unix时间戳"
+      creator:
+        type: "string"
+      filter_type:
+        type: "integer"
+        format: "int32"
+        description: "朋友圈类型。0：企业发表 1：个人发表 2：所有，包括个人创建以及企业创建，默认情况下为所有类型"
+      cursor:
+        type: "string"
+      limit:
+        type: "integer"
+        format: "int32"
+    title: "GetMomentListReq"
+    example:
+      cursor: "cursor"
+      start_time: 0
+      creator: "creator"
+      filter_type: 1
+      end_time: 6
+      limit: 5
+  GetGroupchatRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      group_chat:
+        type: "object"
+        properties:
+          chat_id:
+            type: "string"
+          name:
+            type: "string"
+          owner:
+            type: "string"
+          notice:
+            type: "string"
+          create_time:
+            type: "integer"
+            format: "int32"
+          member_list:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                userid:
+                  type: "string"
+                type:
+                  type: "integer"
+                  format: "int32"
+                join_time:
+                  type: "integer"
+                  format: "int32"
+                join_scene:
+                  type: "integer"
+                  format: "int32"
+                invitor:
+                  type: "object"
+                  properties:
+                    userid:
+                      type: "string"
+                unionid:
+                  type: "string"
+                name:
+                  type: "string"
+                group_nickname:
+                  type: "string"
+          admin_list:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                userid:
+                  type: "string"
+    title: "GetGroupchatRsp"
+    example:
+      errcode: 0
+      group_chat: "{}"
+      errmsg: "errmsg"
+  GetGroupchatReq:
+    type: "object"
+    properties:
+      chat_id:
+        type: "string"
+      need_name:
+        type: "integer"
+        format: "int32"
+    title: "GetGroupchatReq"
+  ConvertOpengidToChatidRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      chat_id:
+        type: "string"
+    title: "ConvertOpengidToChatidRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      chat_id: "chat_id"
+  ConvertOpengidToChatidReq:
+    type: "object"
+    properties:
+      opengid:
+        type: "string"
+    title: "ConvertOpengidToChatidReq"
+    example:
+      opengid: "opengid"
+  GroupchatListRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      group_chat_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            chat_id:
+              type: "string"
+            status:
+              type: "integer"
+              format: "int32"
+      next_cursor:
+        type: "string"
+    title: "GroupchatListRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      errmsg: "errmsg"
+      group_chat_list:
+      - "{}"
+      - "{}"
+  GroupchatListReq:
+    type: "object"
+    properties:
+      status_filter:
+        type: "integer"
+        format: "int32"
+        description: "客户群跟进状态过滤。0 - 所有列表(即不过滤);1 - 离职待继承;2 - 离职继承中;3 - 离职继承完成;默认为0"
+      owner_filter:
+        type: "object"
+        properties:
+          userid_list:
+            type: "array"
+            items:
+              type: "string"
+      cursor:
+        type: "string"
+      limit:
+        type: "integer"
+        format: "int32"
+    title: "GroupchatListReq"
+    example:
+      cursor: "cursor"
+      status_filter: 0
+      owner_filter: "{}"
+      limit: 6
+  GroupchatTransferRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      failed_chat_list:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            chat_id:
+              type: "string"
+            errcode:
+              type: "integer"
+              format: "int32"
+            errmsg:
+              type: "string"
+    title: "GroupchatTransferRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      failed_chat_list:
+      - "{}"
+      - "{}"
+  GroupchatTransferReq:
+    type: "object"
+    properties:
+      chat_id_list:
+        type: "array"
+        items:
+          type: "string"
+      new_owner:
+        type: "string"
+    title: "GroupchatTransferReq"
+    example:
+      new_owner: "new_owner"
+      chat_id_list:
+      - "chat_id_list"
+      - "chat_id_list"
+  ResignedTransferResultRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      customer:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            external_userid:
+              type: "string"
+            status:
+              type: "integer"
+              format: "int32"
+            takeover_time:
+              type: "integer"
+              format: "int32"
+    title: "ResignedTransferResultRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      customer:
+      - "{}"
+      - "{}"
+  ResignedTransferResultReq:
+    type: "object"
+    properties:
+      handover_userid:
+        type: "string"
+      takeover_userid:
+        type: "string"
+      cursor:
+        type: "string"
+    title: "ResignedTransferResultReq"
+    example:
+      handover_userid: "handover_userid"
+      cursor: "cursor"
+      takeover_userid: "takeover_userid"
+  ResignedTransferCustomerRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      customer:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            external_userid:
+              type: "string"
+            errcode:
+              type: "integer"
+              format: "int32"
+    title: "ResignedTransferCustomerRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      customer:
+      - "{}"
+      - "{}"
+  ResignedTransferCustomerReq:
+    type: "object"
+    properties:
+      handover_userid:
+        type: "string"
+      takeover_userid:
+        type: "string"
+      external_userid:
+        type: "array"
+        items:
+          type: "string"
+    title: "ResignedTransferCustomerReq"
+    example:
+      handover_userid: "handover_userid"
+      external_userid:
+      - "external_userid"
+      - "external_userid"
+      takeover_userid: "takeover_userid"
+  GetUnassignedListRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      is_last:
+        type: "boolean"
+      next_cursor:
+        type: "string"
+      info:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            handover_userid:
+              type: "string"
+            external_userid:
+              type: "string"
+            dimission_time:
+              type: "integer"
+              format: "int32"
+    title: "GetUnassignedListRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      is_last: true
+      errmsg: "errmsg"
+      info:
+      - "{}"
+      - "{}"
+  GetUnassignedListReq:
+    type: "object"
+    properties:
+      page_id:
+        type: "integer"
+        format: "int32"
+      cursor:
+        type: "string"
+      page_size:
+        type: "integer"
+        format: "int32"
+    title: "GetUnassignedListReq"
+    example:
+      cursor: "cursor"
+      page_id: 0
+      page_size: 6
+  GetTransferResultRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      next_cursor:
+        type: "string"
+      customer:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            external_userid:
+              type: "string"
+            status:
+              type: "integer"
+              format: "int32"
+            takeover_time:
+              type: "integer"
+              format: "int32"
+    title: "GetTransferResultRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      errmsg: "errmsg"
+      customer:
+      - "{}"
+      - "{}"
+  GetTransferResultReq:
+    type: "object"
+    properties:
+      handover_userid:
+        type: "string"
+      takeover_userid:
+        type: "string"
+      cursor:
+        type: "string"
+    title: "GetTransferResultReq"
+    example:
+      handover_userid: "handover_userid"
+      cursor: "cursor"
+      takeover_userid: "takeover_userid"
+  TransferCustomerRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      customer:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            external_userid:
+              type: "string"
+            errcode:
+              type: "integer"
+              format: "int32"
+    title: "TransferCustomerRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      customer:
+      - "{}"
+      - "{}"
+  TransferCustomerReq:
+    type: "object"
+    properties:
+      handover_userid:
+        type: "string"
+      takeover_userid:
+        type: "string"
+      external_userid:
+        type: "array"
+        items:
+          type: "string"
+      transfer_success_msg:
+        type: "string"
+    title: "TransferCustomerReq"
+    example:
+      handover_userid: "handover_userid"
+      external_userid:
+      - "external_userid"
+      - "external_userid"
+      transfer_success_msg: "transfer_success_msg"
+      takeover_userid: "takeover_userid"
+  MarkCorpContactTagReq:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      external_userid:
+        type: "string"
+      add_tag:
+        type: "array"
+        items:
+          type: "string"
+      remove_tag:
+        type: "array"
+        items:
+          type: "string"
+    title: "MarkCorpTagReq"
+    example:
+      external_userid: "external_userid"
+      add_tag:
+      - "add_tag"
+      - "add_tag"
+      userid: "userid"
+      remove_tag:
+      - "remove_tag"
+      - "remove_tag"
+  DelCorpTagReq:
+    type: "object"
+    properties:
+      tag_id:
+        type: "array"
+        items:
+          type: "string"
+      group_id:
+        type: "array"
+        items:
+          type: "string"
+      agentid:
+        type: "string"
+        description: "授权方安装的应用agentid。仅旧的第三方多应用套件需要填此参数"
+    title: "DelCorpTagReq"
+    example:
+      agentid: "agentid"
+      group_id:
+      - "group_id"
+      - "group_id"
+      tag_id:
+      - "tag_id"
+      - "tag_id"
+  EditCorpTagReq:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      order:
+        type: "string"
+      agentid:
+        type: "integer"
+        format: "int32"
+    title: "EditCorpTagReq"
+    example:
+      agentid: 0
+      name: "name"
+      id: "id"
+      order: "order"
+  AddCorpTagRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      tag_group:
+        type: "object"
+        properties:
+          group_id:
+            type: "string"
+          group_name:
+            type: "string"
+          create_time:
+            type: "integer"
+            format: "int32"
+          order:
+            type: "integer"
+            format: "int32"
+          tag:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "string"
+                name:
+                  type: "string"
+                cretate_time:
+                  type: "integer"
+                  format: "int32"
+                order:
+                  type: "integer"
+                  format: "int32"
+    title: "AddCorpTagRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      tag_group: "{}"
+  AddCorpTagReq:
+    type: "object"
+    properties:
+      group_id:
+        type: "string"
+      group_name:
+        type: "string"
+      order:
+        type: "integer"
+        format: "int32"
+      tag:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+            order:
+              type: "integer"
+              format: "int32"
+      agentid:
+        type: "integer"
+        format: "int32"
+        description: "授权方安装的应用agentid。仅旧的第三方多应用套件需要填此参数"
+    title: "AddCorpTagReq"
+    example:
+      agentid: 6
+      group_id: "group_id"
+      group_name: "group_name"
+      tag:
+      - "{}"
+      - "{}"
+      order: 0
+  GetCorpTagListRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      tag_group:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            group_id:
+              type: "string"
+            group_name:
+              type: "string"
+            create_time:
+              type: "integer"
+              format: "int32"
+            order:
+              type: "integer"
+              format: "int32"
+            deleted:
+              type: "boolean"
+            tag:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                  name:
+                    type: "string"
+                  create_time:
+                    type: "integer"
+                    format: "int32"
+                  order:
+                    type: "integer"
+                    format: "int32"
+                  deleted:
+                    type: "boolean"
+    title: "GetCorpTagListRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      tag_group:
+      - "{}"
+      - "{}"
+  GetCorpTagListReq:
+    type: "object"
+    properties:
+      tag_id:
+        type: "array"
+        items:
+          type: "string"
+      group_id:
+        type: "array"
+        items:
+          type: "string"
+    title: "GetCorpTagListReq"
+    example:
+      group_id:
+      - "group_id"
+      - "group_id"
+      tag_id:
+      - "tag_id"
+      - "tag_id"
+  UpdateExternalContactRemarkReq:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      external_userid:
+        type: "string"
+      remark:
+        type: "string"
+      description:
+        type: "string"
+      remark_company:
+        type: "string"
+      remark_mobiles:
+        type: "array"
+        items:
+          type: "string"
+      remark_pic_mediaid:
+        type: "string"
+    title: "UpdateExternalContactRemarkReq"
+    example:
+      external_userid: "external_userid"
+      remark_mobiles:
+      - "remark_mobiles"
+      - "remark_mobiles"
+      remark_company: "remark_company"
+      description: "description"
+      remark: "remark"
+      userid: "userid"
+      remark_pic_mediaid: "remark_pic_mediaid"
+  FollowInfo:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      remark:
+        type: "string"
+      description:
+        type: "string"
+      createtime:
+        type: "integer"
+        format: "int32"
+      tag_id:
+        type: "array"
+        items:
+          type: "string"
+      remark_corp_name:
+        type: "string"
+      remark_mobiles:
+        type: "array"
+        items:
+          type: "string"
+      oper_userid:
+        type: "string"
+      add_way:
+        type: "string"
+      state:
+        type: "string"
+    title: "FollowInfo"
+    example:
+      createtime: 6
+      remark_mobiles:
+      - "remark_mobiles"
+      - "remark_mobiles"
+      description: "description"
+      tag_id:
+      - "tag_id"
+      - "tag_id"
+      remark: "remark"
+      remark_corp_name: "remark_corp_name"
+      state: "state"
+      oper_userid: "oper_userid"
+      userid: "userid"
+      add_way: "add_way"
+  ExternalContactItem:
+    type: "object"
+    properties:
+      follow_info:
+        $ref: "#/definitions/FollowInfo"
+      external_contact:
+        $ref: "#/definitions/ExternalContact"
+    title: "ExternalContactItem"
+    example:
+      follow_info:
+        createtime: 6
+        remark_mobiles:
+        - "remark_mobiles"
+        - "remark_mobiles"
+        description: "description"
+        tag_id:
+        - "tag_id"
+        - "tag_id"
+        remark: "remark"
+        remark_corp_name: "remark_corp_name"
+        state: "state"
+        oper_userid: "oper_userid"
+        userid: "userid"
+        add_way: "add_way"
+      external_contact:
+        external_contact: "{}"
+  GetExternalContactBatchUserRsp:
+    type: "object"
+    properties:
+      next_cursor:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      external_contact_list:
+        type: "array"
+        items:
+          $ref: "#/definitions/ExternalContactItem"
+    title: "GetExternalContactBatchUserRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      external_contact_list:
+      - follow_info:
+          createtime: 6
+          remark_mobiles:
+          - "remark_mobiles"
+          - "remark_mobiles"
+          description: "description"
+          tag_id:
+          - "tag_id"
+          - "tag_id"
+          remark: "remark"
+          remark_corp_name: "remark_corp_name"
+          state: "state"
+          oper_userid: "oper_userid"
+          userid: "userid"
+          add_way: "add_way"
+        external_contact:
+          external_contact: "{}"
+      - follow_info:
+          createtime: 6
+          remark_mobiles:
+          - "remark_mobiles"
+          - "remark_mobiles"
+          description: "description"
+          tag_id:
+          - "tag_id"
+          - "tag_id"
+          remark: "remark"
+          remark_corp_name: "remark_corp_name"
+          state: "state"
+          oper_userid: "oper_userid"
+          userid: "userid"
+          add_way: "add_way"
+        external_contact:
+          external_contact: "{}"
+      errmsg: "errmsg"
+  BatchUserFollowInfo:
+    type: "object"
+    properties:
+      follow_info:
+        type: "object"
+        properties:
+          remark:
+            type: "string"
+          description:
+            type: "string"
+          createtime:
+            type: "integer"
+            format: "int32"
+          tag_id:
+            type: "array"
+            items:
+              type: "string"
+          remark_corp_name:
+            type: "string"
+          remark_mobiles:
+            type: "array"
+            items:
+              type: "string"
+          oper_userid:
+            type: "string"
+          add_way:
+            type: "integer"
+            format: "int32"
+  GetExternalContactBatchUserReq:
+    type: "object"
+    properties:
+      userid_list:
+        type: "array"
+        items:
+          type: "string"
+      cursor:
+        type: "string"
+      limit:
+        type: "integer"
+        format: "int32"
+    title: "GetExternalContactBatchUserReq"
+    example:
+      cursor: "cursor"
+      limit: 0
+      userid_list:
+      - "userid_list"
+      - "userid_list"
+  GetExternalContactDetailRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      next_cursor:
+        type: "string"
+      follow_user:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            remark:
+              type: "string"
+            description:
+              type: "string"
+            createtime:
+              type: "integer"
+              format: "int32"
+            remark_corp_name:
+              type: "string"
+            oper_userid:
+              type: "string"
+            add_way:
+              type: "integer"
+              format: "int32"
+            state:
+              type: "string"
+            remark_mobiles:
+              type: "array"
+              items:
+                type: "string"
+            tags:
+              type: "array"
+              items:
+                type: "object"
+                properties:
+                  group_name:
+                    type: "string"
+                  tag_name:
+                    type: "string"
+                  tag_id:
+                    type: "string"
+                  type:
+                    type: "integer"
+                    format: "int32"
+      external_contact:
+        type: "object"
+        properties:
+          external_userid:
+            type: "string"
+          name:
+            type: "string"
+          position:
+            type: "string"
+          avatar:
+            type: "string"
+          corp_name:
+            type: "string"
+          corp_full_name:
+            type: "string"
+          type:
+            type: "integer"
+            format: "int32"
+          gender:
+            type: "integer"
+            format: "int32"
+          unionid:
+            type: "string"
+          external_profile:
+            type: "object"
+            properties:
+              external_attr:
+                type: "array"
+                items:
+                  $ref: "#/definitions/ExtAttr"
+    title: "GetExternalContactDetailRsp"
+    example:
+      errcode: 0
+      next_cursor: "next_cursor"
+      follow_user:
+      - "{}"
+      - "{}"
+      external_contact: "{}"
+  ProfileMiniprogram:
+    type: "object"
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      miniprogram:
+        type: "object"
+        properties:
+          appid:
+            type: "string"
+          pagepath:
+            type: "string"
+          title:
+            type: "string"
+  ExternalContact:
+    type: "object"
+    properties:
+      external_contact:
+        type: "object"
+        properties:
+          external_userid:
+            type: "string"
+          name:
+            type: "string"
+          position:
+            type: "string"
+          avatar:
+            type: "string"
+          corp_name:
+            type: "string"
+          corp_full_name:
+            type: "string"
+          type:
+            type: "integer"
+            format: "int32"
+          gender:
+            type: "integer"
+            format: "int32"
+          unionid:
+            type: "string"
+          external_profile:
+            type: "object"
+            properties:
+              external_attr:
+                type: "array"
+                items:
+                  $ref: "#/definitions/ExtAttr"
+    example:
+      external_contact: "{}"
+  ProfileWeb:
+    type: "object"
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      web:
+        type: "object"
+        properties:
+          url:
+            type: "string"
+          title:
+            type: "string"
+  ProfileText:
+    type: "object"
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      text:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+  ContactFollowUser:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      remark:
+        type: "string"
+      description:
+        type: "string"
+      createtime:
+        type: "integer"
+        format: "int32"
+      remark_corp_name:
+        type: "string"
+      oper_userid:
+        type: "string"
+      add_way:
+        type: "integer"
+        format: "int32"
+      state:
+        type: "string"
+      remark_mobiles:
+        type: "array"
+        items:
+          type: "string"
+      tags:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            group_name:
+              type: "string"
+            tag_name:
+              type: "string"
+            tag_id:
+              type: "string"
+            type:
+              type: "integer"
+              format: "int32"
+  GetExternalContactListRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      external_userid:
+        type: "array"
+        items:
+          type: "string"
+    title: "GetExternalContactListRsp"
+    example:
+      errcode: 0
+      external_userid:
+      - "external_userid"
+      - "external_userid"
+      errmsg: "errmsg"
+  CloseTempChatReq:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      external_userid:
+        type: "string"
+    title: "CloseTempChatReq"
+    example:
+      external_userid: "external_userid"
+      userid: "userid"
+  DelContactWayReq:
+    type: "object"
+    properties:
+      config_id:
+        type: "string"
+    title: "DelContactWayReq"
+    example:
+      config_id: "config_id"
+  UpdateContactWayReq:
+    type: "object"
+    properties:
+      config_id:
+        type: "string"
+      remark:
+        type: "string"
+      skip_verify:
+        type: "boolean"
+      style:
+        type: "integer"
+        format: "int32"
+      state:
+        type: "string"
+      user:
+        type: "array"
+        items:
+          type: "string"
+      party:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+      expires_in:
+        type: "integer"
+        format: "int32"
+        description: "临时会话二维码有效期，以秒为单位"
+      chat_expires_in:
+        type: "integer"
+        format: "int32"
+      unionid:
+        type: "string"
+      conclusions:
+        type: "object"
+        properties:
+          text:
+            type: "object"
+            properties:
+              content:
+                type: "string"
+          image:
+            type: "object"
+            properties:
+              media_id:
+                type: "string"
+          link:
+            type: "object"
+            properties:
+              title:
+                type: "string"
+              picurl:
+                type: "string"
+              desc:
+                type: "string"
+              url:
+                type: "string"
+          miniprogram:
+            type: "object"
+            properties:
+              title:
+                type: "string"
+              pic_media_id:
+                type: "string"
+              appid:
+                type: "string"
+              page:
+                type: "string"
+    title: "UpdateContactWayReq"
+    example:
+      unionid: "unionid"
+      chat_expires_in: 5
+      config_id: "config_id"
+      conclusions: "{}"
+      remark: "remark"
+      style: 0
+      state: "state"
+      skip_verify: true
+      user:
+      - "user"
+      - "user"
+      expires_in: 1
+      party:
+      - 6
+      - 6
+  GetContactWayReq:
+    type: "object"
+    properties:
+      config_id:
+        type: "string"
+    title: "GetContactWayReq"
+    example:
+      config_id: "config_id"
+  GetContactWayRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      contact_way:
+        type: "object"
+        properties:
+          config_id:
+            type: "string"
+          type:
+            type: "integer"
+            format: "int32"
+          scene:
+            type: "integer"
+            format: "int32"
+          style:
+            type: "integer"
+            format: "int32"
+          remark:
+            type: "string"
+          skip_verify:
+            type: "boolean"
+          state:
+            type: "string"
+          user:
+            type: "array"
+            items:
+              type: "string"
+          party:
+            type: "array"
+            items:
+              type: "integer"
+              format: "int32"
+          is_temp:
+            type: "boolean"
+            description: "是否临时会话模式，true表示使用临时会话模式，默认为false"
+          expires_in:
+            type: "integer"
+            format: "int32"
+          unionid:
+            type: "string"
+            description: "可进行临时会话的客户unionid，该参数仅在is_temp为true时有效，如不指定则不进行限制"
+          conclusions:
+            type: "object"
+            properties:
+              text:
+                type: "object"
+                properties:
+                  content:
+                    type: "string"
+              image:
+                type: "object"
+                properties:
+                  media_id:
+                    type: "string"
+              link:
+                type: "object"
+                properties:
+                  title:
+                    type: "string"
+                  picurl:
+                    type: "string"
+                  desc:
+                    type: "string"
+                  url:
+                    type: "string"
+              miniprogram:
+                type: "object"
+                properties:
+                  title:
+                    type: "string"
+                  pic_media_id:
+                    type: "string"
+                  appid:
+                    type: "string"
+                  page:
+                    type: "string"
+    title: "GetContactWayRsp"
+    example:
+      errcode: 0
+      contact_way: "{}"
+      errmsg: "errmsg"
+  AddContactWayRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      config_id:
+        type: "string"
+      qr_code:
+        type: "string"
+    title: "AddContactWayRsp"
+    example:
+      errcode: 0
+      config_id: "config_id"
+      errmsg: "errmsg"
+      qr_code: "qr_code"
+  AddContactWayReq:
+    type: "object"
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      scene:
+        type: "integer"
+        format: "int32"
+      style:
+        type: "integer"
+        format: "int32"
+      remark:
+        type: "string"
+      skip_verify:
+        type: "boolean"
+      state:
+        type: "string"
+      user:
+        type: "array"
+        items:
+          type: "string"
+      party:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+      is_temp:
+        type: "boolean"
+        description: "是否临时会话模式，true表示使用临时会话模式，默认为false"
+      expires_in:
+        type: "integer"
+        format: "int32"
+      unionid:
+        type: "string"
+        description: "可进行临时会话的客户unionid，该参数仅在is_temp为true时有效，如不指定则不进行限制"
+      conclusions:
+        type: "object"
+        properties:
+          text:
+            type: "object"
+            properties:
+              content:
+                type: "string"
+          image:
+            type: "object"
+            properties:
+              media_id:
+                type: "string"
+          link:
+            type: "object"
+            properties:
+              title:
+                type: "string"
+              picurl:
+                type: "string"
+              desc:
+                type: "string"
+              url:
+                type: "string"
+          miniprogram:
+            type: "object"
+            properties:
+              title:
+                type: "string"
+              pic_media_id:
+                type: "string"
+              appid:
+                type: "string"
+              page:
+                type: "string"
+    title: "AddContactWayRsp"
+    example:
+      unionid: "unionid"
+      is_temp: true
+      conclusions: "{}"
+      style: 1
+      remark: "remark"
+      state: "state"
+      type: 0
+      skip_verify: true
+      user:
+      - "user"
+      - "user"
+      expires_in: 5
+      party:
+      - 5
+      - 5
+      scene: 6
+  GetFollowUserListRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      follow_user:
+        type: "array"
+        items:
+          type: "string"
+    title: "GetFollowUserListRsp"
+    example:
+      errcode: 0
+      follow_user:
+      - "follow_user"
+      - "follow_user"
+      errmsg: "errmsg"
+  GetTagListRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      taglist:
+        type: "array"
+        items:
+          $ref: "#/definitions/TagListInfo"
+    title: "GetTagListRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      taglist:
+      - tagname: "tagname"
+        tagid: 6
+      - tagname: "tagname"
+        tagid: 6
+  TagListInfo:
+    type: "object"
+    properties:
+      tagid:
+        type: "integer"
+        format: "int32"
+      tagname:
+        type: "string"
+    example:
+      tagname: "tagname"
+      tagid: 6
+  GetTagUsersRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      tagname:
+        type: "string"
+      userlist:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            name:
+              type: "string"
+      partylist:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+    title: "GetTagUsersRsp"
+    example:
+      errcode: 0
+      userlist:
+      - "{}"
+      - "{}"
+      tagname: "tagname"
+      partylist:
+      - 6
+      - 6
+      errmsg: "errmsg"
+  TagUserInfo:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      name:
+        type: "string"
+  DeleteTagUsersReq:
+    type: "object"
+    properties:
+      tagid:
+        type: "integer"
+        format: "int32"
+      userlist:
+        type: "array"
+        items:
+          type: "string"
+      partylist:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+    title: "DeleteTagUsersReq"
+    example:
+      userlist:
+      - "userlist"
+      - "userlist"
+      partylist:
+      - 6
+      - 6
+      tagid: 0
+  AddTagUsersReq:
+    type: "object"
+    properties:
+      tagid:
+        type: "integer"
+        format: "int32"
+      userlist:
+        type: "array"
+        items:
+          type: "string"
+      partylist:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+    title: "AddTagUsers"
+    example:
+      userlist:
+      - "userlist"
+      - "userlist"
+      partylist:
+      - 6
+      - 6
+      tagid: 0
+  UpdateTagReq:
+    type: "object"
+    properties:
+      tagid:
+        type: "integer"
+        format: "int32"
+      tagname:
+        type: "string"
+    title: "UpdateTagReq"
+    example:
+      tagname: "tagname"
+      tagid: 0
+  CreateTagRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      tagid:
+        type: "integer"
+        format: "int32"
+    title: "CreateTagRsp"
+    example:
+      errcode: 0
+      tagid: 6
+      errmsg: "errmsg"
+  CreateTagReq:
+    type: "object"
+    properties:
+      tagname:
+        type: "string"
+      tagid:
+        type: "integer"
+        format: "int32"
+    title: "CreateTagReq"
+    example:
+      tagname: "tagname"
+      tagid: 0
+  GetActiveStatRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      active_cnt:
+        type: "integer"
+        format: "int32"
+    title: "GetActiveStatRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      active_cnt: 6
+  UpdateTaskcardRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      invaliduser:
+        type: "array"
+        items:
+          type: "string"
+    title: "UpdateTaskcardRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      invaliduser:
+      - "invaliduser"
+      - "invaliduser"
+  UpdateTaskcardReq:
+    type: "object"
+    properties:
+      userid:
+        type: "array"
+        items:
+          type: "string"
+      agentid:
+        type: "integer"
+        format: "int32"
+      task_id:
+        type: "string"
+      replace_name:
+        type: "string"
+    title: "UpdateTaskcardReq"
+    example:
+      agentid: 0
+      task_id: "task_id"
+      userid:
+      - "userid"
+      - "userid"
+      replace_name: "replace_name"
+  SendMessageRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      invaliduser:
+        type: "string"
+      invalidparty:
+        type: "string"
+      invalidtag:
+        type: "string"
+    example:
+      errcode: 0
+      invalidtag: "invalidtag"
+      errmsg: "errmsg"
+      invalidparty: "invalidparty"
+      invaliduser: "invaliduser"
+  SendMessageReq:
+    type: "object"
+    properties:
+      touser:
+        type: "string"
+      toparty:
+        type: "string"
+      totag:
+        type: "string"
+      msgtype:
+        type: "string"
+      agentid:
+        type: "integer"
+        format: "int32"
+      text:
+        $ref: "#/definitions/TextMsg"
+      image:
+        $ref: "#/definitions/ImageMsg"
+      voice:
+        $ref: "#/definitions/VoiceMsg"
+      video:
+        $ref: "#/definitions/VideoMsg"
+      textcard:
+        $ref: "#/definitions/TextcardMsg"
+      news:
+        $ref: "#/definitions/NewsMsg"
+      mpnews:
+        $ref: "#/definitions/MPNewsMsg"
+      markdown:
+        $ref: "#/definitions/MarkdownMsg"
+      miniprogram_notice:
+        $ref: "#/definitions/MiniProgramMsg"
+      taskcard:
+        $ref: "#/definitions/TaskcardMsg"
+    title: "SendMessageReq"
+    example:
+      voice:
+        media_id: "media_id"
+      news:
+        articles:
+        - picurl: "picurl"
+          description: "description"
+          title: "title"
+          url: "url"
+        - picurl: "picurl"
+          description: "description"
+          title: "title"
+          url: "url"
+      image:
+        media_id: "media_id"
+      taskcard:
+        description: "description"
+        task_id: "task_id"
+        title: "title"
+        btn:
+        - color: "color"
+          name: "name"
+          key: "key"
+          is_bold: true
+          replace_name: "replace_name"
+        - color: "color"
+          name: "name"
+          key: "key"
+          is_bold: true
+          replace_name: "replace_name"
+        url: "url"
+      agentid: 0
+      touser: "touser"
+      mpnews:
+        articles:
+        - thumb_media_id: "thumb_media_id"
+          author: "author"
+          digest: "digest"
+          content_source_url: "content_source_url"
+          title: "title"
+          content: "content"
+        - thumb_media_id: "thumb_media_id"
+          author: "author"
+          digest: "digest"
+          content_source_url: "content_source_url"
+          title: "title"
+          content: "content"
+      totag: "totag"
+      textcard:
+        btntxt: "btntxt"
+        description: "description"
+        title: "title"
+        url: "url"
+      video:
+        media_id: "media_id"
+        description: "description"
+        title: "title"
+      miniprogram_notice:
+        content_item:
+        - "{}"
+        - "{}"
+        appid: "appid"
+        description: "description"
+        emphasis_first_item: true
+        page: "page"
+        title: "title"
+      markdown:
+        content: "content"
+      text:
+        content: "content"
+      msgtype: "msgtype"
+      toparty: "toparty"
+  GetJoinQrcodeRsp:
+    type: "object"
+    properties:
+      errmsg:
+        type: "string"
+      errcode:
+        type: "integer"
+        format: "int32"
+      join_qrcode:
+        type: "string"
+    title: "GetJoinQrcodeRsp"
+    example:
+      errcode: 0
+      join_qrcode: "join_qrcode"
+      errmsg: "errmsg"
+  InviteReq:
+    type: "object"
+    properties:
+      user:
+        type: "array"
+        items:
+          type: "string"
+      party:
+        type: "array"
+        items:
+          type: "string"
+      tag:
+        type: "array"
+        items:
+          type: "string"
+    title: "InviteReq"
+    description: "InviteReq"
+    example:
+      tag:
+      - "tag"
+      - "tag"
+      user:
+      - "user"
+      - "user"
+      party:
+      - "party"
+      - "party"
+  InviteRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      invaliduser:
+        type: "array"
+        items:
+          type: "string"
+      invalidparty:
+        type: "array"
+        items:
+          type: "string"
+      invalidtag:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      errcode: 0
+      invalidtag:
+      - "invalidtag"
+      - "invalidtag"
+      errmsg: "errmsg"
+      invalidparty:
+      - "invalidparty"
+      - "invalidparty"
+      invaliduser:
+      - "invaliduser"
+      - "invaliduser"
+  ConvertToOpenidReq:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      userid:
+        type: "string"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      userid: "userid"
+  ConvertToOpenidRsp:
+    type: "object"
+    properties:
+      openid:
+        type: "string"
+    example:
+      openid: "openid"
+  ListUserRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      userlist:
+        type: "array"
+        items:
+          $ref: "#/definitions/User"
+    description: "ListUserRsp"
+    example:
+      errcode: 0
+      userlist:
+      - address: "address"
+        gender: "gender"
+        external_position: "external_position"
+        mobile: "mobile"
+        is_leader_in_dept:
+        - 5
+        - 5
+        telephone: "telephone"
+        direct_leader:
+        - "direct_leader"
+        - "direct_leader"
+        avatar: "avatar"
+        hide_mobile: 2
+        main_department: 7
+        userid: "userid"
+        english_name: "english_name"
+        thumb_avatar: "thumb_avatar"
+        name: "name"
+        alias: "alias"
+        qr_code: "qr_code"
+        extattr:
+          attrs:
+          - web: "{}"
+            name: "name"
+            text: "{}"
+            type: 2
+            miniprogram: "{}"
+          - web: "{}"
+            name: "name"
+            text: "{}"
+            type: 2
+            miniprogram: "{}"
+        position: "position"
+        department:
+        - 6
+        - 6
+        open_userid: "open_userid"
+        external_profile:
+          wechat_channels: "{}"
+          external_attr:
+          - web: "{}"
+            name: "name"
+            text: "{}"
+            type: 2
+            miniprogram: "{}"
+          - web: "{}"
+            name: "name"
+            text: "{}"
+            type: 2
+            miniprogram: "{}"
+          external_corp_name: "external_corp_name"
+        email: "email"
+        order:
+        - 1
+        - 1
+        status: 5
+      - address: "address"
+        gender: "gender"
+        external_position: "external_position"
+        mobile: "mobile"
+        is_leader_in_dept:
+        - 5
+        - 5
+        telephone: "telephone"
+        direct_leader:
+        - "direct_leader"
+        - "direct_leader"
+        avatar: "avatar"
+        hide_mobile: 2
+        main_department: 7
+        userid: "userid"
+        english_name: "english_name"
+        thumb_avatar: "thumb_avatar"
+        name: "name"
+        alias: "alias"
+        qr_code: "qr_code"
+        extattr:
+          attrs:
+          - web: "{}"
+            name: "name"
+            text: "{}"
+            type: 2
+            miniprogram: "{}"
+          - web: "{}"
+            name: "name"
+            text: "{}"
+            type: 2
+            miniprogram: "{}"
+        position: "position"
+        department:
+        - 6
+        - 6
+        open_userid: "open_userid"
+        external_profile:
+          wechat_channels: "{}"
+          external_attr:
+          - web: "{}"
+            name: "name"
+            text: "{}"
+            type: 2
+            miniprogram: "{}"
+          - web: "{}"
+            name: "name"
+            text: "{}"
+            type: 2
+            miniprogram: "{}"
+          external_corp_name: "external_corp_name"
+        email: "email"
+        order:
+        - 1
+        - 1
+        status: 5
+      errmsg: "errmsg"
+  SimplelistRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      userlist:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            userid:
+              type: "string"
+            name:
+              type: "string"
+            department:
+              type: "array"
+              items:
+                type: "integer"
+                format: "int32"
+            open_userid:
+              type: "string"
+    description: "SimplelistRsp"
+    example:
+      errcode: 0
+      userlist:
+      - "{}"
+      - "{}"
+      errmsg: "errmsg"
+  BatchDeleteUserReq:
+    type: "object"
+    properties:
+      useridlist:
+        type: "array"
+        items:
+          type: "string"
+    title: "BatchDeleteUserReq"
+    description: "BatchDeleteUserReq"
+    example:
+      useridlist:
+      - "useridlist"
+      - "useridlist"
+  UpdateUserReq:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      name:
+        type: "string"
+      department:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+      order:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+      position:
+        type: "string"
+      mobile:
+        type: "string"
+      gender:
+        type: "integer"
+        format: "int32"
+      email:
+        type: "string"
+      is_leader_in_dept:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int32"
+      enable:
+        type: "integer"
+        format: "int32"
+      avatar_mediaid:
+        type: "string"
+      telephone:
+        type: "string"
+      alias:
+        type: "string"
+      address:
+        type: "string"
+      main_department:
+        type: "integer"
+        format: "int32"
+      extattr:
+        $ref: "#/definitions/ExtAttrs"
+      external_position:
+        type: "string"
+      external_profile:
+        $ref: "#/definitions/ExternalProfile"
+    title: "UpdateUserReq"
+    description: "UpdateUserReq"
+    example:
+      address: "address"
+      gender: 1
+      external_position: "external_position"
+      mobile: "mobile"
+      is_leader_in_dept:
+      - 5
+      - 5
+      telephone: "telephone"
+      main_department: 2
+      userid: "userid"
+      enable: 5
+      avatar_mediaid: "avatar_mediaid"
+      name: "name"
+      alias: "alias"
+      extattr:
+        attrs:
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+      position: "position"
+      department:
+      - 0
+      - 0
+      external_profile:
+        wechat_channels: "{}"
+        external_attr:
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        external_corp_name: "external_corp_name"
+      email: "email"
+      order:
+      - 6
+      - 6
+  GetUserRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      userid:
+        type: "string"
+        description: "成员UserID。对应管理端的帐号，企业内必须唯一。不区分大小写，长度为1~64个字节。只能由数字、字母和“_-@.”四\
+          种字符组成，且第一个字符必须是数字或字母。"
+      name:
+        type: "string"
+        description: "成员名称。长度为1~64个utf8字符"
+      department:
+        type: "array"
+        description: "成员所属部门id列表,不超过20个"
+        items:
+          type: "integer"
+          format: "int32"
+      order:
+        type: "array"
+        description: "部门内的排序值"
+        items:
+          type: "integer"
+          format: "int32"
+      position:
+        type: "string"
+        description: "职务信息"
+      mobile:
+        type: "string"
+        description: "手机号码。企业内必须唯一，mobile/email二者不能同时为空"
+      gender:
+        type: "integer"
+        format: "int32"
+        description: "性别"
+      email:
+        type: "string"
+        description: "邮箱"
+      is_leader_in_dept:
+        type: "integer"
+        format: "int32"
+        description: "个数必须和参数department的个数一致"
+      avatar:
+        type: "string"
+        description: "成员头像的mediaid"
+      thumb_avatar:
+        type: "string"
+        description: "头像缩略图url"
+      telephone:
+        type: "string"
+        description: "座机"
+      alias:
+        type: "string"
+        description: "成员别名。长度1~32个utf8字符"
+      address:
+        type: "string"
+        description: "地址"
+      open_userid:
+        type: "string"
+        description: "全局唯一。对于同一个服务商，不同应用获取到企业内同一个成员的open_userid是相同的，最多64个字节。仅第三方应用\
+          可获取"
+      main_department:
+        type: "string"
+        description: "主部门"
+      status:
+        type: "integer"
+        format: "int32"
+        description: "激活状态 1=已激活，2=已禁用，4=未激活，5=退出企业。"
+      qr_code:
+        type: "string"
+        description: "员工个人二维码，扫描可添加为外部联系人(注意返回的是一个url，可在浏览器上打开该url以展示二维码)；第三方仅通讯录应\
+          用可获取。"
+      external_position:
+        type: "string"
+        description: "对外职务"
+      external_profile:
+        description: "成员对外属性"
+        $ref: "#/definitions/ExternalProfile"
+      extattr:
+        description: "自定义字段"
+        $ref: "#/definitions/ExtAttrs"
+    title: "User"
+    description: "User"
+    example:
+      errcode: 0
+      address: "address"
+      gender: 5
+      external_position: "external_position"
+      mobile: "mobile"
+      errmsg: "errmsg"
+      is_leader_in_dept: 5
+      telephone: "telephone"
+      avatar: "avatar"
+      main_department: "main_department"
+      userid: "userid"
+      thumb_avatar: "thumb_avatar"
+      name: "name"
+      alias: "alias"
+      qr_code: "qr_code"
+      extattr:
+        attrs:
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+      position: "position"
+      department:
+      - 6
+      - 6
+      open_userid: "open_userid"
+      external_profile:
+        wechat_channels: "{}"
+        external_attr:
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        external_corp_name: "external_corp_name"
+      email: "email"
+      order:
+      - 1
+      - 1
+      status: 2
+  User:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+        description: "成员UserID。对应管理端的帐号，企业内必须唯一。不区分大小写，长度为1~64个字节。只能由数字、字母和“_-@.”四\
+          种字符组成，且第一个字符必须是数字或字母。"
+      name:
+        type: "string"
+        description: "成员名称。长度为1~64个utf8字符"
+      department:
+        type: "array"
+        description: "成员所属部门id列表,不超过20个"
+        items:
+          type: "integer"
+          format: "int32"
+      order:
+        type: "array"
+        description: "部门内的排序值"
+        items:
+          type: "integer"
+          format: "int32"
+      position:
+        type: "string"
+        description: "职务信息"
+      mobile:
+        type: "string"
+        description: "手机号码。企业内必须唯一，mobile/email二者不能同时为空"
+      gender:
+        type: "string"
+        description: "性别"
+      email:
+        type: "string"
+        description: "邮箱"
+      is_leader_in_dept:
+        type: "array"
+        description: "个数必须和参数department的个数一致"
+        items:
+          type: "integer"
+          format: "int32"
+      direct_leader:
+        type: "array"
+        description: "直属上级UserID，最多有5个直属上级；第三方仅通讯录应用可获取；对于非第三方创建的成员，第三方通讯录应用也不可获取；\
+          上游企业不可获取下游企业成员该字段"
+        items:
+          type: "string"
+      avatar:
+        type: "string"
+        description: "成员头像的mediaid"
+      thumb_avatar:
+        type: "string"
+        description: "头像缩略图url"
+      telephone:
+        type: "string"
+        description: "座机"
+      alias:
+        type: "string"
+        description: "成员别名。长度1~32个utf8字符"
+      status:
+        type: "integer"
+        format: "int32"
+        description: "激活状态 1=已激活，2=已禁用，4=未激活，5=退出企业。"
+      address:
+        type: "string"
+        description: "地址"
+      hide_mobile:
+        type: "integer"
+        format: "int32"
+      english_name:
+        type: "string"
+      open_userid:
+        type: "string"
+        description: "全局唯一。对于同一个服务商，不同应用获取到企业内同一个成员的open_userid是相同的，最多64个字节。仅第三方应用\
+          可获取"
+      main_department:
+        type: "integer"
+        format: "int32"
+        description: "主部门"
+      qr_code:
+        type: "string"
+        description: "员工个人二维码，扫描可添加为外部联系人(注意返回的是一个url，可在浏览器上打开该url以展示二维码)；第三方仅通讯录应\
+          用可获取。"
+      external_position:
+        type: "string"
+        description: "对外职务"
+      external_profile:
+        description: "成员对外属性"
+        $ref: "#/definitions/ExternalProfile"
+      extattr:
+        description: "自定义字段"
+        $ref: "#/definitions/ExtAttrs"
+    title: "User"
+    description: "User"
+    example:
+      address: "address"
+      gender: "gender"
+      external_position: "external_position"
+      mobile: "mobile"
+      is_leader_in_dept:
+      - 5
+      - 5
+      telephone: "telephone"
+      direct_leader:
+      - "direct_leader"
+      - "direct_leader"
+      avatar: "avatar"
+      hide_mobile: 2
+      main_department: 7
+      userid: "userid"
+      english_name: "english_name"
+      thumb_avatar: "thumb_avatar"
+      name: "name"
+      alias: "alias"
+      qr_code: "qr_code"
+      extattr:
+        attrs:
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+      position: "position"
+      department:
+      - 6
+      - 6
+      open_userid: "open_userid"
+      external_profile:
+        wechat_channels: "{}"
+        external_attr:
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        external_corp_name: "external_corp_name"
+      email: "email"
+      order:
+      - 1
+      - 1
+      status: 5
+  ExternalProfile:
+    type: "object"
+    properties:
+      external_corp_name:
+        type: "string"
+      wechat_channels:
+        type: "object"
+        properties:
+          nickname:
+            type: "string"
+            description: "视频号名称"
+          status:
+            type: "integer"
+            format: "int32"
+      external_attr:
+        type: "array"
+        items:
+          $ref: "#/definitions/ExtAttr"
+    title: "ExternalProfile"
+    description: "ExternalProfile"
+    example:
+      wechat_channels: "{}"
+      external_attr:
+      - web: "{}"
+        name: "name"
+        text: "{}"
+        type: 2
+        miniprogram: "{}"
+      - web: "{}"
+        name: "name"
+        text: "{}"
+        type: 2
+        miniprogram: "{}"
+      external_corp_name: "external_corp_name"
+  CreateUserReq:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+        description: "成员UserID。对应管理端的帐号，企业内必须唯一。不区分大小写，长度为1~64个字节。只能由数字、字母和“_-@.”四\
+          种字符组成，且第一个字符必须是数字或字母。"
+      name:
+        type: "string"
+        description: "成员名称。长度为1~64个utf8字符"
+      alias:
+        type: "string"
+        description: "成员别名。长度1~32个utf8字符"
+      mobile:
+        type: "string"
+        description: "手机号码。企业内必须唯一，mobile/email二者不能同时为空"
+      department:
+        type: "array"
+        description: "成员所属部门id列表,不超过20个"
+        items:
+          type: "integer"
+          format: "int32"
+      order:
+        type: "array"
+        description: "部门内的排序值"
+        items:
+          type: "integer"
+          format: "int32"
+      position:
+        type: "string"
+        description: "职务信息"
+      gender:
+        type: "integer"
+        format: "int32"
+        description: "性别"
+      email:
+        type: "string"
+        description: "邮箱"
+      telephone:
+        type: "string"
+        description: "座机"
+      is_leader_in_dept:
+        type: "integer"
+        format: "int32"
+        description: "个数必须和参数department的个数一致"
+      avatar_mediaid:
+        type: "string"
+        description: "成员头像的mediaid"
+      enable:
+        type: "integer"
+        format: "int32"
+        description: "启用/禁用成员。1表示启用成员，0表示禁用成员"
+      extattr:
+        description: "自定义字段"
+        $ref: "#/definitions/ExtAttrs"
+    title: "CreateUserReq"
+    description: "CreateUserReq"
+    example:
+      gender: 1
+      mobile: "mobile"
+      is_leader_in_dept: 5
+      telephone: "telephone"
+      userid: "userid"
+      avatar_mediaid: "avatar_mediaid"
+      enable: 5
+      name: "name"
+      alias: "alias"
+      extattr:
+        attrs:
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+        - web: "{}"
+          name: "name"
+          text: "{}"
+          type: 2
+          miniprogram: "{}"
+      position: "position"
+      department:
+      - 0
+      - 0
+      email: "email"
+      order:
+      - 6
+      - 6
+  ExtAttrs:
+    type: "object"
+    properties:
+      attrs:
+        type: "array"
+        items:
+          $ref: "#/definitions/ExtAttr"
+    title: "ExtAttrs"
+    example:
+      attrs:
+      - web: "{}"
+        name: "name"
+        text: "{}"
+        type: 2
+        miniprogram: "{}"
+      - web: "{}"
+        name: "name"
+        text: "{}"
+        type: 2
+        miniprogram: "{}"
+  ExtAttr:
+    type: "object"
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      text:
+        type: "object"
+        properties:
+          value:
+            type: "string"
+      web:
+        type: "object"
+        properties:
+          url:
+            type: "string"
+          title:
+            type: "string"
+      miniprogram:
+        type: "object"
+        properties:
+          appid:
+            type: "string"
+          pagepath:
+            type: "string"
+          title:
+            type: "string"
+    title: "ExtAttr"
+    example:
+      web: "{}"
+      name: "name"
+      text: "{}"
+      type: 2
+      miniprogram: "{}"
+  TaskcardMsg:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      description:
+        type: "string"
+      url:
+        type: "string"
+      task_id:
+        type: "string"
+      btn:
+        type: "array"
+        items:
+          $ref: "#/definitions/Btn"
+    example:
+      description: "description"
+      task_id: "task_id"
+      title: "title"
+      btn:
+      - color: "color"
+        name: "name"
+        key: "key"
+        is_bold: true
+        replace_name: "replace_name"
+      - color: "color"
+        name: "name"
+        key: "key"
+        is_bold: true
+        replace_name: "replace_name"
+      url: "url"
+  Btn:
+    type: "object"
+    properties:
+      key:
+        type: "string"
+      name:
+        type: "string"
+      replace_name:
+        type: "string"
+      color:
+        type: "string"
+      is_bold:
+        type: "boolean"
+    example:
+      color: "color"
+      name: "name"
+      key: "key"
+      is_bold: true
+      replace_name: "replace_name"
+  MiniProgramMsg:
+    type: "object"
+    properties:
+      appid:
+        type: "string"
+      page:
+        type: "string"
+      title:
+        type: "string"
+      description:
+        type: "string"
+      emphasis_first_item:
+        type: "boolean"
+      content_item:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            key:
+              type: "string"
+            value:
+              type: "string"
+    example:
+      content_item:
+      - "{}"
+      - "{}"
+      appid: "appid"
+      description: "description"
+      emphasis_first_item: true
+      page: "page"
+      title: "title"
+  MarkdownMsg:
+    type: "object"
+    properties:
+      content:
+        type: "string"
+    example:
+      content: "content"
+  TextMsg:
+    type: "object"
+    properties:
+      content:
+        type: "string"
+    example:
+      content: "content"
+  ImageMsg:
+    type: "object"
+    properties:
+      media_id:
+        type: "string"
+    example:
+      media_id: "media_id"
+  VoiceMsg:
+    type: "object"
+    properties:
+      media_id:
+        type: "string"
+    example:
+      media_id: "media_id"
+  VideoMsg:
+    type: "object"
+    properties:
+      media_id:
+        type: "string"
+      title:
+        type: "string"
+      description:
+        type: "string"
+    example:
+      media_id: "media_id"
+      description: "description"
+      title: "title"
+  FileMsg:
+    type: "object"
+    properties:
+      media_id:
+        type: "string"
+  TextcardMsg:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      description:
+        type: "string"
+      url:
+        type: "string"
+      btntxt:
+        type: "string"
+    example:
+      btntxt: "btntxt"
+      description: "description"
+      title: "title"
+      url: "url"
+  NewsMsg:
+    type: "object"
+    properties:
+      articles:
+        type: "array"
+        items:
+          $ref: "#/definitions/ArticleMsg"
+    example:
+      articles:
+      - picurl: "picurl"
+        description: "description"
+        title: "title"
+        url: "url"
+      - picurl: "picurl"
+        description: "description"
+        title: "title"
+        url: "url"
+  MPNewsMsg:
+    type: "object"
+    properties:
+      articles:
+        type: "array"
+        items:
+          $ref: "#/definitions/MPArticleMsg"
+    example:
+      articles:
+      - thumb_media_id: "thumb_media_id"
+        author: "author"
+        digest: "digest"
+        content_source_url: "content_source_url"
+        title: "title"
+        content: "content"
+      - thumb_media_id: "thumb_media_id"
+        author: "author"
+        digest: "digest"
+        content_source_url: "content_source_url"
+        title: "title"
+        content: "content"
+  MPArticleMsg:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      thumb_media_id:
+        type: "string"
+      author:
+        type: "string"
+      content_source_url:
+        type: "string"
+      content:
+        type: "string"
+      digest:
+        type: "string"
+    example:
+      thumb_media_id: "thumb_media_id"
+      author: "author"
+      digest: "digest"
+      content_source_url: "content_source_url"
+      title: "title"
+      content: "content"
+  ArticleMsg:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      description:
+        type: "string"
+      url:
+        type: "string"
+      picurl:
+        type: "string"
+    example:
+      picurl: "picurl"
+      description: "description"
+      title: "title"
+      url: "url"
+  WebMsg:
+    type: "object"
+  TokenRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      access_token:
+        type: "string"
+      expires_in:
+        type: "integer"
+    title: "TokenRsp"
+    format: "int64"
+    description: "TokenRsp"
+    example:
+      errcode: 0
+      access_token: "access_token"
+      errmsg: "errmsg"
+      expires_in: 6
+  GetApiDomainIpRsp:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+      ip_list:
+        type: "array"
+        items:
+          type: "string"
+    title: "GetApiDomainIpRsp"
+    description: "GetApiDomainIpRsp"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
+      ip_list:
+      - "ip_list"
+      - "ip_list"
+  BaseResponse:
+    type: "object"
+    properties:
+      errcode:
+        type: "integer"
+        format: "int32"
+      errmsg:
+        type: "string"
+    example:
+      errcode: 0
+      errmsg: "errmsg"
