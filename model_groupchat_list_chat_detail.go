@@ -9,8 +9,7 @@
 
 package swagger
 
-type GetGroupchatRsp struct {
-	Errmsg string `json:"errmsg,omitempty"`
-	Errcode int32 `json:"errcode,omitempty"`
-	GroupChat *GetGroupchatRspGroupChat `json:"group_chat,omitempty"`
+type GroupchatListChatDetail struct {
+	ChatId string `json:"chat_id,omitempty"`
+	Status int32 `json:"status,omitempty"`
 }

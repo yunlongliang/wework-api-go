@@ -5006,6 +5006,106 @@ definitions:
       filter_type: 1
       end_time: 6
       limit: 5
+  GetGroupchatRspGroupChatItemInvitor:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+    title: "GetGroupchatRspGroupChatItemInvitor"
+    example:
+      userid: "userid"
+  GetGroupchatRspGroupChatItem:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+      type:
+        type: "integer"
+        format: "int32"
+      join_time:
+        type: "integer"
+        format: "int32"
+      join_scene:
+        type: "integer"
+        format: "int32"
+      invitor:
+        $ref: "#/definitions/GetGroupchatRspGroupChatItemInvitor"
+      unionid:
+        type: "string"
+      name:
+        type: "string"
+      group_nickname:
+        type: "string"
+    title: "GetGroupchatRspGroupChatItem"
+    example:
+      group_nickname: "group_nickname"
+      unionid: "unionid"
+      name: "name"
+      join_scene: 5
+      type: 1
+      invitor:
+        userid: "userid"
+      userid: "userid"
+      join_time: 5
+  GetGroupchatRspGroupChatAdminList:
+    type: "object"
+    properties:
+      userid:
+        type: "string"
+    title: "GetGroupchatRspGroupChatAdminList"
+    example:
+      userid: "userid"
+  GetGroupchatRspGroupChat:
+    type: "object"
+    properties:
+      chat_id:
+        type: "string"
+      name:
+        type: "string"
+      owner:
+        type: "string"
+      notice:
+        type: "string"
+      create_time:
+        type: "integer"
+        format: "int32"
+      member_list:
+        type: "array"
+        items:
+          $ref: "#/definitions/GetGroupchatRspGroupChatItem"
+      admin_list:
+        type: "array"
+        items:
+          $ref: "#/definitions/GetGroupchatRspGroupChatAdminList"
+    title: "GetGroupchatRspGroupChat"
+    example:
+      owner: "owner"
+      create_time: 6
+      name: "name"
+      member_list:
+      - group_nickname: "group_nickname"
+        unionid: "unionid"
+        name: "name"
+        join_scene: 5
+        type: 1
+        invitor:
+          userid: "userid"
+        userid: "userid"
+        join_time: 5
+      - group_nickname: "group_nickname"
+        unionid: "unionid"
+        name: "name"
+        join_scene: 5
+        type: 1
+        invitor:
+          userid: "userid"
+        userid: "userid"
+        join_time: 5
+      admin_list:
+      - userid: "userid"
+      - userid: "userid"
+      chat_id: "chat_id"
+      notice: "notice"
   GetGroupchatRsp:
     type: "object"
     properties:
@@ -5015,57 +5115,38 @@ definitions:
         type: "integer"
         format: "int32"
       group_chat:
-        type: "object"
-        properties:
-          chat_id:
-            type: "string"
-          name:
-            type: "string"
-          owner:
-            type: "string"
-          notice:
-            type: "string"
-          create_time:
-            type: "integer"
-            format: "int32"
-          member_list:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                userid:
-                  type: "string"
-                type:
-                  type: "integer"
-                  format: "int32"
-                join_time:
-                  type: "integer"
-                  format: "int32"
-                join_scene:
-                  type: "integer"
-                  format: "int32"
-                invitor:
-                  type: "object"
-                  properties:
-                    userid:
-                      type: "string"
-                unionid:
-                  type: "string"
-                name:
-                  type: "string"
-                group_nickname:
-                  type: "string"
-          admin_list:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                userid:
-                  type: "string"
+        $ref: "#/definitions/GetGroupchatRspGroupChat"
     title: "GetGroupchatRsp"
     example:
       errcode: 0
-      group_chat: "{}"
+      group_chat:
+        owner: "owner"
+        create_time: 6
+        name: "name"
+        member_list:
+        - group_nickname: "group_nickname"
+          unionid: "unionid"
+          name: "name"
+          join_scene: 5
+          type: 1
+          invitor:
+            userid: "userid"
+          userid: "userid"
+          join_time: 5
+        - group_nickname: "group_nickname"
+          unionid: "unionid"
+          name: "name"
+          join_scene: 5
+          type: 1
+          invitor:
+            userid: "userid"
+          userid: "userid"
+          join_time: 5
+        admin_list:
+        - userid: "userid"
+        - userid: "userid"
+        chat_id: "chat_id"
+        notice: "notice"
       errmsg: "errmsg"
   GetGroupchatReq:
     type: "object"
@@ -5099,6 +5180,18 @@ definitions:
     title: "ConvertOpengidToChatidReq"
     example:
       opengid: "opengid"
+  GroupchatListChatDetail:
+    type: "object"
+    properties:
+      chat_id:
+        type: "string"
+      status:
+        type: "integer"
+        format: "int32"
+    title: "GroupchatListChatDetail"
+    example:
+      chat_id: "chat_id"
+      status: 6
   GroupchatListRsp:
     type: "object"
     properties:
@@ -5110,13 +5203,7 @@ definitions:
       group_chat_list:
         type: "array"
         items:
-          type: "object"
-          properties:
-            chat_id:
-              type: "string"
-            status:
-              type: "integer"
-              format: "int32"
+          $ref: "#/definitions/GroupchatListChatDetail"
       next_cursor:
         type: "string"
     title: "GroupchatListRsp"
@@ -5125,8 +5212,10 @@ definitions:
       next_cursor: "next_cursor"
       errmsg: "errmsg"
       group_chat_list:
-      - "{}"
-      - "{}"
+      - chat_id: "chat_id"
+        status: 6
+      - chat_id: "chat_id"
+        status: 6
   GroupchatListReq:
     type: "object"
     properties:

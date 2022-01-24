@@ -12,6 +12,6 @@ package swagger
 type GroupchatListRsp struct {
 	Errcode int32 `json:"errcode,omitempty"`
 	Errmsg string `json:"errmsg,omitempty"`
-	GroupChatList []interface{} `json:"group_chat_list,omitempty"`
+	GroupChatList []GroupchatListChatDetail `json:"group_chat_list,omitempty"`
 	NextCursor string `json:"next_cursor,omitempty"`
 }
